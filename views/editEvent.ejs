@@ -1,0 +1,185 @@
+<%- include('./common/sidebar_common') %>
+<div class="layout-page">
+  <%- include('./common/header_new') %>
+
+  <div class="content-wrapper">
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card mb-4">
+            <hr class="my-0">
+            <div class="card-body">
+              
+              <h3>Edit <%= eventName %> Event</h3>
+              <form action="/loader/submitForm" method="POST" encType="multipart/form-data" style="display: flex;flex-direction: column; gap: 30px;">
+                <div>
+                  <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                    Event Name
+                </label>
+                <input class="form-control" type="text" name="eventName" value="<%= eventDetails.eventName  %>">
+                  
+                    <% fieldNames.forEach((fieldName, index) => { %>
+                        <div style="display: block;">
+                            <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                                <%= fieldLabels[index] %>
+                            </label>
+                            <input type="text" class="form-control" style="width: 100%;" name="<%= fieldName %>" value="<%= eventDetails.eventsData[fieldName] %>">
+                        </div>
+                    <% }); %>
+                    <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                      Text Color
+                  </label>
+                  <input class="form-control" type="text" name="textColor" value="<%= eventDetails.eventsData.textColor %>">
+                  <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                    Background Color
+                </label>
+                <input class="form-control" type="text" name="bgColor" value="<%= eventDetails.eventsData.bgColor %>">
+                    <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                      Event Date
+                  </label>
+                  <% const formattedDate = eventDetails?.eventsData.eventDate ? eventDetails.eventsData.eventDate.split('/').reverse().join('-') : ''; %>
+                  <input class="form-control" type="date" name="eventDate" value="<%= formattedDate %>">
+                  <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                    Event End Date
+                  </label>
+                  <% const formattedEndDate = eventDetails?.eventsData.eventEndDate ? eventDetails.eventsData.eventEndDate.split('/').reverse().join('-') : ''; %>
+                  <input class="form-control" type="date" name="eventEndDate" value="<%= formattedEndDate %>" />
+              
+                      <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                          Conative Logo
+                      </label>
+                      <input class="form-control" type="file" name="conativeLogo" value="<%= eventDetails.eventsData.conativeLogo  %>">
+                      
+                      <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                        Conative Logo Alt
+                    </label>
+                    <input class="form-control" type="text" name="conativeLogoAlt" value="<%= eventDetails.eventsData.conativeLogoAlt %>">
+                  </div>
+                  <div>
+                    <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                      Left Hanging Image
+                    </label>
+                    <input class="form-control" type="file" name="leftHangingImage" />
+                    <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                      Left Hanging Image Alt
+                  </label>
+                  <input class="form-control" type="text" name="leftHangingImageAlt" value="<%= eventDetails.eventsData.leftHangingImageAlt %>">
+                  </div>
+
+                  <div>
+                    <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                      Right Hanging Image
+                    </label>
+                    <input class="form-control" type="file" name="rightHangingImage" />
+                    <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                      Right Hanging Image Alt
+                  </label>
+                  <input class="form-control" type="text" name="rightHangingImageAlt" value="<%= eventDetails.eventsData.rightHangingImageAlt %>">
+                  </div>
+
+                  <div>
+                    <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                      Bottom Left Image
+                    </label>
+                    <input class="form-control" type="file" name="bottomLeftImage" />
+                    <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                      Bottom Left  Image Alt
+                  </label>
+                  <input class="form-control" type="text" name="bottomLeftImageAlt" value="<%= eventDetails.eventsData.bottomLeftImageAlt %>">
+                  </div>
+
+                  <div>
+                    <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                      Bottom Right Image
+                    </label>
+                    <input class="form-control" type="file" name="bottomRightImage" />
+                    <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                      Bottom Right Image Alt
+                  </label>
+                  <input class="form-control" type="text" name="bottomRightImageAlt" value="<%= eventDetails.eventsData.bottomRightImageAlt %>">
+                  </div>
+                  
+                  <div>
+                    <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                      Home Page Event Image
+                    </label>
+                    <input class="form-control" type="file" name="homePageEventImage" />
+                  </div>
+
+
+                <div>
+                    <button class="btn btn-primary me-2" type="submit">Update Event</button>
+                </div>
+            </form>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('./common/footer') %>
+  <div class="content-backdrop fade"></div>
+</div>
+<script src="./assets/js/jquery.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const bgTypeRadio = document.querySelectorAll('input[name="bgType"]');
+    const textTypeRadio= document.querySelectorAll('input[name="textType"]');
+    const solidColorOption = document.getElementById('solidColorOption');
+    const textsolidColorOption = document.getElementById('textsolidColorOption');
+    const gradientOption = document.getElementById('gradientOption');
+    const textgradientOption = document.getElementById('textgradientOption');
+    const radialgradientOption = document.getElementById('radialgradientOption');
+
+
+    function updateTextOptionsDisplay(){
+
+    textTypeRadio.forEach(item=>{
+      if (!item.checked) return;
+      if (item.value === 'textsolid') {
+        textsolidColorOption.style.display = 'block';
+        textgradientOption.style.display = 'none';
+      } else if(item.value === 'textgradient'){
+        textgradientOption.style.display = 'block';
+        textsolidColorOption.style.display = 'none';
+      }
+    })
+
+    }
+
+
+    function updateOptionsDisplay() {
+   
+      
+    bgTypeRadio.forEach(item=>{
+      if (!item.checked) return;
+      if (item.value === 'solid') {
+        solidColorOption.style.display = 'block';
+        gradientOption.style.display = 'none';
+        radialgradientOption.style.display = 'none';
+      } else if(item.value === 'gradient'){
+        gradientOption.style.display = 'block';
+        solidColorOption.style.display = 'none';
+        radialgradientOption.style.display = 'none';
+      }else{
+        radialgradientOption.style.display = 'block';
+        gradientOption.style.display = 'none';
+        solidColorOption.style.display = 'none';
+      }
+    }
+    )  
+  }
+
+    bgTypeRadio.forEach(item=>{
+      item.addEventListener('change', updateOptionsDisplay);
+    })
+    textTypeRadio.forEach(item=>{
+      item.addEventListener('change', updateTextOptionsDisplay);
+    })
+
+    updateOptionsDisplay();
+  });
+</script>

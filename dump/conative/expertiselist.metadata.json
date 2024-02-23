@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"2d9ac2e3b56b43a09f40e3f652f7ba7e","collectionName":"expertiselist","type":"collection"}

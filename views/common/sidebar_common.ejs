@@ -1,0 +1,273 @@
+	<!-- Menu -->
+  <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" data-bg-class="bg-menu-theme">
+    <div class="app-brand demo ">
+      <a href="/dashboard"> <span class="app-brand-logo demo">
+        <img src="./assets/img/2022-11_Logo.png"></span>
+      </a>
+      <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-xl-none"> <i class="bx bx-chevron-left bx-sm align-middle"></i> </a>
+    </div>
+    <div class="menu-inner-shadow"></div>
+    <ul class="menu-inner py-1 ps ps--active-y">
+      <!-- Dashboard -->
+      <li class="menu-item  <% if(title.toLowerCase() == 'dashboard') { %> <%= 'active' %> <% } %>" >
+        <a href="/dashboard" class="menu-link"> <i class="menu-icon tf-icons bx bx-home-circle"></i>
+          <div data-i18n="Analytics">Dashboard</div>
+        </a>
+      </li>
+      <!-- Layouts -->
+      <!-- <%= title.toLowerCase() %> -->
+      <!-- expertise -->
+      <li class="menu-item <% if(title.toLowerCase() == 'header' || title.toLowerCase() == 'our projects' || title.toLowerCase() == 'digital legacy' || title.toLowerCase() == 'start project' || title.toLowerCase() == 'certification & recognition' || title.toLowerCase() == 'industries we serve' || title.toLowerCase() == 'expertise' || title.toLowerCase() == 'client project') { %> <%= 'active open' %> <% } %>">
+        <a href="/home" class="menu-link menu-toggle"> <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Layouts">Home</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item  <% if(title.toLowerCase() == 'header') { %> <%= 'active' %> <% } %>">
+            <a href="/header" class="menu-link">
+              <div data-i18n="Without menu">Header</div>
+            </a>
+          </li>
+          <li class="menu-item  <% if(title.toLowerCase() == 'digital legacy') { %> <%= 'active' %> <% } %>">
+            <a href="/digitallegacy" class="menu-link">
+              <div data-i18n="Blank">About Us Digital</div>
+            </a>
+          </li>
+          <!-- <li class="menu-item  <% if(title.toLowerCase() == 'Start Project') { %> <%= 'active' %> <% } %>">
+            <a href="/startpjt" class="menu-link">
+              <div data-i18n="Blank">Start Project</div>
+            </a>
+          </li> -->
+          <li class="menu-item  <% if(title.toLowerCase() == 'start project') { %> <%= 'active' %> <% } %>">
+            <a href="/gallery" class="menu-link">
+              <div data-i18n="Blank">Gallery</div>
+            </a>
+          </li>
+          <li class="menu-item <% if(title.toLowerCase() == 'expertise') { %> <%= 'active' %> <% } %>">
+            <a href="/expertise" class="menu-link">
+              <div data-i18n="Blank">Our Expertise</div>
+            </a>
+          </li>
+          <li class="menu-item  <% if(title.toLowerCase() == 'industries we serve') { %> <%= 'active' %> <% } %>">
+            <a href="/industries" class="menu-link">
+              <div data-i18n="Fluid">Industries</div>
+            </a>
+          </li>
+          <li class="menu-item <% if(title.toLowerCase() == 'our projects') { %> <%= 'active' %> <% } %>" >
+            <a href="/projects" class="menu-link">
+              <div data-i18n="Without navbar">Our Projects</div>
+            </a>
+          </li>
+           <li class="menu-item <% if(title.toLowerCase() == 'client project') { %> <%= 'active' %> <% } %>">
+            <a href="/clientproject" class="menu-link">
+              <div data-i18n="Blank">Testimonial</div>
+            </a>
+          </li>
+          <li class="menu-item  <% if(title.toLowerCase() == 'certification & recognition') { %> <%= 'active' %> <% } %>">
+            <a href="/awradscertification" class="menu-link">
+              <div data-i18n="Container">Awrads C & R</div>
+            </a>
+          </li>
+    
+        </ul>
+      </li>
+      <li class="menu-header small text-uppercase"> <span class="menu-header-text">Pages</span> </li>
+      <li class="menu-item">
+        <a href="/contact" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Contact">Contact</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="/aboutus" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="AboutUs">About Us</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="/teams" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Teams">Teams</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="/career" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Career">Career</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="/lifeatconative" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="lifeatconative">Life At Conative</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="/testimonials" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="testimonials">Testimonials</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="/portfolio" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Portfolio">Portfolio</div>
+        </a>
+      </li>
+      <li class="menu-header small text-uppercase"> <span class="menu-header-text">Post Types</span></li>
+      <li class="menu-item">
+        <a href="/loader" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Careers">Custom Loader</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="/loader-events" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Careers">View Events</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="/careers" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Careers">Careers</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="/industries-we-serve" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Industries We Serve">Industries We Serve</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="/web-development" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Web Development">Web Development</div>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="/graphic-design" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Graphic Design">Graphic Design</div>
+        </a>
+      </li>
+      <li class="menu-header small text-uppercase"> <span class="menu-header-text">Settings</span> </li>
+    
+      <li class="menu-item <% if(title.toLowerCase() == 'register' || title.toLowerCase() == 'users') { %> <%= 'active open' %> <% } %>">
+        <a href="javascript:void(0);" class="menu-link menu-toggle"> <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+          <div data-i18n="Authentications">Users</div>
+        </a>
+        <ul class="menu-sub">
+        
+          <li class="menu-item <% if(title.toLowerCase() == 'users') { %> <%= 'active' %> <% } %>">
+            <a href="/users" class="menu-link">
+              <div data-i18n="Basic">All Users</div>
+            </a>
+          </li>
+          <li class="menu-item <% if(title.toLowerCase() == 'register') { %> <%= 'active' %> <% } %>">
+            <a href="/register" class="menu-link">
+              <div data-i18n="Basic">Add User</div>
+            </a>
+          </li>
+    
+        </ul>
+      </li>
+
+      <li class="menu-item <% if(title.toLowerCase() == 'setting' || title.toLowerCase() == 'social') { %> <%= 'active open' %> <% } %>" >
+        <a href="javascript:void(0);" class="menu-link menu-toggle"> <i class="menu-icon tf-icons bx bx-copy"></i>
+          <div data-i18n="Authentications">Setting</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item <% if(title.toLowerCase() == 'setting') { %> <%= 'active' %> <% } %>">
+            <a href="/setting" class="menu-link">
+              <div data-i18n="Basic">General</div>
+            </a>
+          </li>
+          <li class="menu-item <% if(title.toLowerCase() == 'social') { %> <%= 'active' %> <% } %>">
+            <a href="/social" class="menu-link">
+              <div data-i18n="Basic">Social</div>
+            </a>
+          </li>
+          <!-- <li class="menu-item <% if(title.toLowerCase() == 'menu') { %> <%= 'active' %> <% } %>">
+            <a href="/menu" class="menu-link">
+              <div data-i18n="Basic">menu</div>
+            </a>
+          </li> -->
+        </ul>
+      </li>
+   
+      <!-- <li class="menu-header small text-uppercase"><span class="menu-header-text">Components</span></li>
+      
+      <li class="menu-item">
+        <a href="javascript:void(0)" class="menu-link menu-toggle"> <i class="menu-icon tf-icons bx bx-copy"></i>
+          <div data-i18n="Extended UI">Extended UI</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="#" class="menu-link">
+              <div data-i18n="Perfect Scrollbar">Perfect scrollbar</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="#" class="menu-link">
+              <div data-i18n="Text Divider">Text Divider</div>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="menu-item">
+        <a href="#" class="menu-link"> <i class="menu-icon tf-icons bx bx-crown"></i>
+          <div data-i18n="Boxicons">Boxicons</div>
+        </a>
+      </li>
+
+      <li class="menu-header small text-uppercase"><span class="menu-header-text">Forms &amp; Tables</span></li>
+
+      <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle"> <i class="menu-icon tf-icons bx bx-detail"></i>
+          <div data-i18n="Form Elements">Form Elements</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="forms-basic-inputs.html" class="menu-link">
+              <div data-i18n="Basic Inputs">Basic Inputs</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="forms-input-groups.html" class="menu-link">
+              <div data-i18n="Input groups">Input groups</div>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle"> <i class="menu-icon tf-icons bx bx-detail"></i>
+          <div data-i18n="Form Layouts">Form Layouts</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="form-layouts-vertical.html" class="menu-link">
+              <div data-i18n="Vertical Form">Vertical Form</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="form-layouts-horizontal.html" class="menu-link">
+              <div data-i18n="Horizontal Form">Horizontal Form</div>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="menu-item">
+        <a href="tables-basic.html" class="menu-link"> <i class="menu-icon tf-icons bx bx-table"></i>
+          <div data-i18n="Tables">Tables</div>
+        </a>
+      </li> -->
+
+      <div class="ps__rail-x" >
+        <div class="ps__thumb-x" tabindex="0" ></div>
+      </div>
+      <div class="ps__rail-y" >
+        <div class="ps__thumb-y" tabindex="0"></div>
+      </div>
+    </ul>
+  </aside>

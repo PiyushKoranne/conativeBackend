@@ -1,0 +1,1013 @@
+
+<%- include('../../common/sidebar_common') %>
+<div class="layout-page">
+    <%- include('../../common/header_new') %>
+  <div class="content-wrapper">
+    
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <h4 class="fw-bold py-3 mb-4">
+        <% if(msg) { %> <div  class="alert alert-success" id="alertmsg" ><span class="cmn-message"><%= msg %></span></div><% } %>
+      </h4>
+
+      <!-- Team Block -->
+      <div class="row" style="--bs-gutter-x: 0.625rem;">
+        <div class="col-md-12">
+          <div class="card mb-4" >
+            <ul class="nav nav-pills flex-column-reverse flex-md-row-reverse mb-3" style="float:right">
+              <li class="nav-item"><a class="nav-link form-toggle active" data-tab="#ouritemForm" id="ouritem" href="javascript:void(0);">Add New</a></li>
+              <li class="nav-item"><a class="nav-link form-toggle active" data-tab="#ouritemviewForm" id="itemeditform" href="javascript:void(0);">View</a></li>
+            </ul>
+          <div id="ouritemviewForm">
+            
+            <div class="card-body">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Edit</th>
+                    <th>Remove</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for(var item of industriesPosts) { %>
+                    <tr>
+                      <td> 
+                        <%= item.title %>
+                       </td>
+                      <td> 
+                        <%= item.banner_desc %>
+                      </td>
+                      <td> 
+                        <a href="javascript:void(0)"  onclick="industriesPost_edit('<%= item._id %>')">Edit</a>
+                      </td>
+                      <td> 
+                        <a href="industriespost-remove/<%= item._id %>" onclick="return confirm('Are you sure you want to delete this item')">X</a>
+                      </td>
+                    </tr>
+                  <% } %>             
+                </tbody>
+              </table>
+             
+            </div>
+          </div>
+        
+          <div id="ouritemForm">
+            <h5 class="card-header">Add New</h5>
+            <hr class="my-0">
+            <div class="card-body">
+              <form method="POST" action="/industries-post" enctype="multipart/form-data">
+                <input type="hidden" class="form-control" name="editid" value="" />
+                <div class="row">
+                  <div class="mb-3 col-md-10">
+                    <label for="meta_title" class="form-label">Meta Title :</label>
+                    <input type="text" name="meta_title" class="form-control" >
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="meta_desc" class="form-label">Meta Description :</label>
+                    <textarea name="meta_desc" class="form-control" ></textarea>
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="meta_keywords" class="form-label">Meta Keywords :</label>
+                    <input type="text" name="meta_keywords" class="form-control" >
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="title" class="form-label">Title :</label>
+                    <input type="text" name="title" class="form-control">
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="Banner Title" class="form-label">Banner Title :</label>
+                    <input type="text" name="banner_title" class="form-control">
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="Banner Desc" class="form-label">Banner Desc :</label>
+                    <input type="text" name="banner_desc" class="form-control">
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="View project Url" class="form-label">View project Url :</label>
+                    <input type="text" name="view_project_url" class="form-control">
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="content" class="form-label">Project Video :</label>
+                    <input type="file" name="project_video" class="form-control" onchange="readURL(this);"   style="border:none;width:100%;" > 
+                    <!-- <img crossorigin="anonymous" id="insertimage"  src="/images/user.png" alt="your image" width="100px" height="100px"/>  -->
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="content"  class="form-label">Content :</label>
+                    <textarea  name="content" id="content1" class="form-control"></textarea> 
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="content" class="form-label">Banner Main Image :</label>
+                    <input type="file" name="banner_main_image" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="content" class="form-label">Banner Second Image :</label>
+                    <input multiple type="file" name="banner_second_image" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                  </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Dimension Title One :</label>
+                        <input type="text" name="dimension_title_one" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Dimension Image One :</label>
+                        <input type="file" name="dimension_image_one" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Dimension Title two :</label>
+                        <input type="text" name="dimension_title_two" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Dimension Image two :</label>
+                        <input type="file" name="dimension_image_two" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Dimension Title three :</label>
+                        <input type="text" name="dimension_title_three" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Dimension Image three :</label>
+                        <input type="file" name="dimension_image_three" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Dimension Title four :</label>
+                        <input type="text" name="dimension_title_four" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Dimension Image four :</label>
+                        <input type="file" name="dimension_image_four" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Dimension Title five :</label>
+                        <input type="text" name="dimension_title_five" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Dimension Image five :</label>
+                        <input type="file" name="dimension_image_five" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Dimension Title six :</label>
+                        <input type="text" name="dimension_title_six" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Dimension Image six :</label>
+                        <input type="file" name="dimension_image_six" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Dimension Title seven :</label>
+                        <input type="text" name="dimension_title_seven" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Dimension Image seven :</label>
+                        <input type="file" name="dimension_image_seven" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Dimension Title eight :</label>
+                        <input type="text" name="dimension_title_eight" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Dimension Image eight :</label>
+                        <input type="file" name="dimension_image_eight" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+
+                    <div class="mb-3 col-md-10">
+                        <label for="brand_title" class="form-label">Brand Title :</label>
+                        <input type="text" name="brand_title" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-10">
+                        <label for="brand_heading" class="form-label">Brand Heading :</label>
+                        <input type="text" name="brand_heading" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Brand Image One :</label>
+                        <input type="file" name="brand_image_one" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Brand Image two :</label>
+                        <input type="file" name="brand_image_two" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Brand Image three :</label>
+                        <input type="file" name="brand_image_three" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+
+                    <div class="mb-3 col-md-10">
+                        <label for="our_technology_title" class="form-label">Our Technology Title :</label>
+                        <input type="text" name="our_technology_title" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-10">
+                        <label for="content" class="form-label">Our Technology Image :</label>
+                        <input type="file" name="our_technology_image" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-10">
+                        <label for="ask_us_title" class="form-label">Ask Us Title :</label>
+                        <input type="text" name="ask_us_title" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-10">
+                        <label for="ask_us_heading" class="form-label">Ask Us Heading :</label>
+                        <input type="text" name="ask_us_heading" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="ask_us_bg_text" class="form-label">Ask Us Background Text :</label>
+                      <input type="text" name="ask_us_bg_text" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                      <label for="content" class="form-label">Ask Us Image :</label>
+                      <input type="file" name="ask_us_image" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+
+                    <div class="mb-3 col-md-10">
+                      <label for="industries_title" class="form-label">Industries Title :</label>
+                      <input type="text" name="industries_title" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Industries Title One :</label>
+                        <input type="text" name="industries_title_one" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Industries Image One :</label>
+                        <input type="file" name="industries_image_one" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Industries Title two :</label>
+                        <input type="text" name="industries_title_two" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Industries Image two :</label>
+                        <input type="file" name="industries_image_two" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Industries Title three :</label>
+                        <input type="text" name="industries_title_three" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Industries Image three :</label>
+                        <input type="file" name="industries_image_three" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Industries Title four :</label>
+                        <input type="text" name="industries_title_four" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Industries Image four :</label>
+                        <input type="file" name="industries_image_four" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Industries Title five :</label>
+                        <input type="text" name="industries_title_five" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Industries Image five :</label>
+                        <input type="file" name="industries_image_five" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Industries Title six :</label>
+                        <input type="text" name="industries_title_six" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Industries Image six :</label>
+                        <input type="file" name="industries_image_six" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Industries Title seven :</label>
+                        <input type="text" name="industries_title_seven" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Industries Image seven :</label>
+                        <input type="file" name="industries_image_seven" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Industries Title eight :</label>
+                        <input type="text" name="industries_title_eight" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Industries Image eight :</label>
+                        <input type="file" name="industries_image_eight" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+
+                    <div class="mb-3 col-md-5">
+                      <label for="title" class="form-label">Toolkit Title one :</label>
+                      <input type="text" name="toolkit_title_one" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Toolkit Image One :</label>
+                        <input type="file" name="toolkit_image_one" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                      <label for="title" class="form-label">Toolkit Title two :</label>
+                      <input type="text" name="toolkit_title_two" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Toolkit Image two :</label>
+                        <input type="file" name="toolkit_image_two" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                      <label for="title" class="form-label">Toolkit Title three :</label>
+                      <input type="text" name="toolkit_title_three" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Toolkit Image three :</label>
+                        <input type="file" name="toolkit_image_three" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+
+                    <div class="mb-3 col-md-5">
+                      <label for="title" class="form-label">Language Title one :</label>
+                      <input type="text" name="language_title_one" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Language Image One :</label>
+                        <input type="file" name="language_image_one" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                      <label for="title" class="form-label">Language Title two :</label>
+                      <input type="text" name="language_title_two" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Language Image two :</label>
+                        <input type="file" name="language_image_two" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                      <label for="title" class="form-label">Language Title three :</label>
+                      <input type="text" name="language_title_three" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Language Image three :</label>
+                        <input type="file" name="language_image_three" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+
+                    <div class="mb-3 col-md-5">
+                      <label for="title" class="form-label">SDK Title one :</label>
+                      <input type="text" name="sdk_title_one" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">SDK Image One :</label>
+                        <input type="file" name="sdk_image_one" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                      <label for="title" class="form-label">SDK Title two :</label>
+                      <input type="text" name="sdk_title_two" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">SDK Image two :</label>
+                        <input type="file" name="sdk_image_two" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                      <label for="title" class="form-label">SDK Title three :</label>
+                      <input type="text" name="sdk_title_three" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">SDK Image three :</label>
+                        <input type="file" name="sdkmage_three" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    </div>
+                </div>
+                <div class="mt-2">
+                  <button type="submit" class="btn btn-primary me-2">Add</button>
+                </div>
+              </form>
+            </div>
+          </div>
+           
+
+          <div id="edititemform">
+            <h5 class="card-header">Edit</h5>
+            <hr class="my-0">
+            <div class="card-body">
+              <form method="POST" action="/industries-post" enctype="multipart/form-data">
+                <input type="hidden" class="form-control" name="editid" id="editid"/>
+                <div class="row">
+                  <div class="mb-3 col-md-10">
+                    <label for="meta_title" class="form-label">Meta Title :</label>
+                    <input type="text" name="meta_title" id="meta_title" class="form-control" >
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="meta_desc" class="form-label">Meta Description :</label>
+                    <textarea id="meta_desc" name="meta_desc" class="form-control" ></textarea>
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="meta_keywords" class="form-label">Meta Keywords :</label>
+                    <input type="text" name="meta_keywords" id="meta_keywords" class="form-control" >
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="title" class="form-label">Title :</label>
+                    <input type="text" name="title" id="title" class="form-control">
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="Banner Title" class="form-label">Banner Title :</label>
+                    <input type="text" name="banner_title" id="banner_title" class="form-control">
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="Banner Desc" class="form-label">Banner Desc :</label>
+                    <input type="text" name="banner_desc" id="banner_desc" class="form-control">
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="View project Url" class="form-label">View project Url :</label>
+                    <input type="text" name="view_project_url" id="view_project_url" class="form-control">
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="content" class="form-label">Project Video :</label>
+                    <input type="file" name="project_video" class="form-control" onchange="readURL(this);"   style="border:none;width:100%;" >
+                    <input type="hidden" name="pre_project_video" id="pre_project_video">
+                    <span id="project_video_update"></span>
+                    <!-- <img crossorigin="anonymous" id="insertimage"  src="/images/user.png" alt="your image" width="100px" height="100px"/>  -->
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="content"  class="form-label">Content :</label>
+                    <textarea  name="content" id="content" class="form-control"></textarea> 
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="content" class="form-label">Banner Main Image :</label>
+                    <input type="file" name="banner_main_image" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                    <input type="hidden" name="pre_banner_main_image" id="pre_banner_main_image">
+                    <img crossorigin="anonymous" id="banner_main_image_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="content" class="form-label">Banner Second Image :</label>
+                    <input multiple type="file" name="banner_second_image" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    <input type="hidden" name="pre_banner_second_image" id="pre_banner_second_image">
+                    <img crossorigin="anonymous" id="banner_second_image_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                  </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Dimension Title One :</label>
+                        <input type="text" name="dimension_title_one" id="dimension_title_one" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Dimension Image One :</label>
+                        <input type="file" name="dimension_image_one" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_dimension_image_one" id="pre_dimension_image_one">
+                        <img crossorigin="anonymous" id="dimension_image_one_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Dimension Title two :</label>
+                        <input type="text" name="dimension_title_two" id="dimension_title_two" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Dimension Image two :</label>
+                        <input type="file" name="dimension_image_two" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_dimension_image_two" id="pre_dimension_image_two">
+                        <img crossorigin="anonymous" id="dimension_image_two_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Dimension Title three :</label>
+                        <input type="text" name="dimension_title_three" id="dimension_title_three" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Dimension Image three :</label>
+                        <input type="file" name="dimension_image_three" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_dimension_image_three" id="pre_dimension_image_three">
+                        <img crossorigin="anonymous" id="dimension_image_three_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Dimension Title four :</label>
+                        <input type="text" name="dimension_title_four" id="dimension_title_four" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Dimension Image four :</label>
+                        <input type="file" name="dimension_image_four" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_dimension_image_four" id="pre_dimension_image_four">
+                        <img crossorigin="anonymous" id="dimension_image_four_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Dimension Title five :</label>
+                        <input type="text" name="dimension_title_five" id="dimension_title_five" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Dimension Image five :</label>
+                        <input type="file" name="dimension_image_five" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_dimension_image_five" id="pre_dimension_image_five">
+                        <img crossorigin="anonymous" id="dimension_image_five_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Dimension Title six :</label>
+                        <input type="text" name="dimension_title_six" id="dimension_title_six" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Dimension Image six :</label>
+                        <input type="file" name="dimension_image_six" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_dimension_image_six" id="pre_dimension_image_six">
+                        <img crossorigin="anonymous" id="dimension_image_six_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Dimension Title seven :</label>
+                        <input type="text" name="dimension_title_seven" id="dimension_title_seven" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Dimension Image seven :</label>
+                        <input type="file" name="dimension_image_seven" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_dimension_image_seven" id="pre_dimension_image_seven">
+                        <img crossorigin="anonymous" id="dimension_image_seven_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Dimension Title eight :</label>
+                        <input type="text" name="dimension_title_eight" id="dimension_title_eight" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Dimension Image eight :</label>
+                        <input type="file" name="dimension_image_eight" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_dimension_image_eight" id="pre_dimension_image_eight">
+                        <img crossorigin="anonymous" id="dimension_image_eight_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+
+                    <div class="mb-3 col-md-10">
+                        <label for="brand_title" class="form-label">Brand Title :</label>
+                        <input type="text" name="brand_title" id="brand_title" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-10">
+                        <label for="brand_heading" class="form-label">Brand Heading :</label>
+                        <input type="text" name="brand_heading" id="brand_heading" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Brand Image One :</label>
+                        <input type="file" name="brand_image_one" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_brand_image_one" id="pre_brand_image_one">
+                        <img crossorigin="anonymous" id="brand_image_one_update" src="/images/user.png" alt="your image" width="100px" height="100px"/>  
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Brand Image two :</label>
+                        <input type="file" name="brand_image_two" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_brand_image_two" id="pre_brand_image_two">
+                        <img crossorigin="anonymous" id="brand_image_two_update" src="/images/user.png" alt="your image" width="100px" height="100px"/>  
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Brand Image three :</label>
+                        <input type="file" name="brand_image_three" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_brand_image_three" id="pre_brand_image_three">
+                        <img crossorigin="anonymous" id="brand_image_three_update" src="/images/user.png" alt="your image" width="100px" height="100px"/>  
+                    </div>
+
+                    <div class="mb-3 col-md-10">
+                        <label for="our_technology_title" class="form-label">Our Technology Title :</label>
+                        <input type="text" name="our_technology_title" id="our_technology_title" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-10">
+                        <label for="content" class="form-label">Our Technology Image :</label>
+                        <input type="file" name="our_technology_image" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_our_technology_image" id="pre_our_technology_image">
+                        <img crossorigin="anonymous" id="our_technology_image_update" src="/images/user.png" alt="your image" width="100px" height="100px"/>
+                    </div>
+                    <div class="mb-3 col-md-10">
+                        <label for="ask_us_title" class="form-label">Ask Us Title :</label>
+                        <input type="text" name="ask_us_title" id="ask_us_title" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-10">
+                        <label for="ask_us_heading" class="form-label">Ask Us Heading :</label>
+                        <input type="text" name="ask_us_heading" id="ask_us_heading" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="ask_us_bg_text" class="form-label">Ask Us Background Text :</label>
+                      <input type="text" name="ask_us_bg_text" id="ask_us_bg_text" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                      <label for="content" class="form-label">Ask Us Image :</label>
+                      <input type="file" name="ask_us_image" id="ask_us_image" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                      <input type="hidden" name="pre_ask_us_image" id="pre_ask_us_image">
+                      <img crossorigin="anonymous" id="ask_us_image_update" src="/images/user.png" alt="your image" width="100px" height="100px"/>
+                    </div>
+
+                    <div class="mb-3 col-md-10">
+                      <label for="industries_title" class="form-label">Industries Title :</label>
+                      <input type="text" name="industries_title" id="industries_title" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Industries Title One :</label>
+                        <input type="text" name="industries_title_one" id="industries_title_one" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Industries Image One :</label>
+                        <input type="file" name="industries_image_one" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_industries_image_one" id="pre_industries_image_one">
+                        <img crossorigin="anonymous" id="industries_image_one_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Industries Title two :</label>
+                        <input type="text" name="industries_title_two" id="industries_title_two" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Industries Image two :</label>
+                        <input type="file" name="industries_image_two" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_industries_image_two" id="pre_industries_image_two">
+                        <img crossorigin="anonymous" id="industries_image_two_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Industries Title three :</label>
+                        <input type="text" name="industries_title_three" id="industries_title_three" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Industries Image three :</label>
+                        <input type="file" name="industries_image_three" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_industries_image_three" id="pre_industries_image_three">
+                        <img crossorigin="anonymous" id="industries_image_three_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Industries Title four :</label>
+                        <input type="text" name="industries_title_four" id="industries_title_four" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Industries Image four :</label>
+                        <input type="file" name="industries_image_four" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_industries_image_four" id="pre_industries_image_four">
+                        <img crossorigin="anonymous" id="industries_image_four_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Industries Title five :</label>
+                        <input type="text" name="industries_title_five" id="industries_title_five" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Industries Image five :</label>
+                        <input type="file" name="industries_image_five" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_industries_image_five" id="pre_industries_image_five">
+                        <img crossorigin="anonymous" id="industries_image_five_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Industries Title six :</label>
+                        <input type="text" name="industries_title_six" id="industries_title_six" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Industries Image six :</label>
+                        <input type="file" name="industries_image_six" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_industries_image_six" id="pre_industries_image_six">
+                        <img crossorigin="anonymous" id="industries_image_six_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Industries Title seven :</label>
+                        <input type="text" name="industries_title_seven" id="industries_title_seven" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Industries Image seven :</label>
+                        <input type="file" name="industries_image_seven" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_industries_image_seven" id="pre_industries_image_seven">
+                        <img crossorigin="anonymous" id="industries_image_seven_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="title" class="form-label">Industries Title eight :</label>
+                        <input type="text" name="industries_title_eight" id="industries_title_eight" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Industries Image eight :</label>
+                        <input type="file" name="industries_image_eight" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_industries_image_eight" id="pre_industries_image_eight">
+                        <img crossorigin="anonymous" id="industries_image_eight_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+
+                    <div class="mb-3 col-md-5">
+                      <label for="title" class="form-label">Toolkit Title one :</label>
+                      <input type="text" name="toolkit_title_one" id="toolkit_title_one" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Toolkit Image One :</label>
+                        <input type="file" name="toolkit_image_one" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_toolkit_image_one" id="pre_toolkit_image_one">
+                        <img crossorigin="anonymous" id="toolkit_image_one_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                      <label for="title" class="form-label">Toolkit Title two :</label>
+                      <input type="text" name="toolkit_title_two" id="toolkit_title_two" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Toolkit Image two :</label>
+                        <input type="file" name="toolkit_image_two" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_toolkit_image_two" id="pre_toolkit_image_two">
+                        <img crossorigin="anonymous" id="toolkit_image_two_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                      <label for="title" class="form-label">Toolkit Title three :</label>
+                      <input type="text" name="toolkit_title_three" id="toolkit_title_three" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Toolkit Image three :</label>
+                        <input type="file" name="toolkit_image_three" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_toolkit_image_three" id="pre_toolkit_image_three">
+                        <img crossorigin="anonymous" id="toolkit_image_three_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+
+                    <div class="mb-3 col-md-5">
+                      <label for="title" class="form-label">Language Title one :</label>
+                      <input type="text" name="language_title_one" id="language_title_one" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Language Image One :</label>
+                        <input type="file" name="language_image_one" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_language_image_one" id="pre_language_image_one">
+                        <img crossorigin="anonymous" id="language_image_one_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                      <label for="title" class="form-label">Language Title two :</label>
+                      <input type="text" name="language_title_two" id="language_title_two" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Language Image two :</label>
+                        <input type="file" name="language_image_two" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_language_image_two" id="pre_language_image_two">
+                        <img crossorigin="anonymous" id="language_image_two_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                      <label for="title" class="form-label">Language Title three :</label>
+                      <input type="text" name="language_title_three" id="language_title_three" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">Language Image three :</label>
+                        <input type="file" name="language_image_three" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_language_image_three" id="pre_language_image_three">
+                        <img crossorigin="anonymous" id="language_image_three_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+
+                    <div class="mb-3 col-md-5">
+                      <label for="title" class="form-label">SDK Title one :</label>
+                      <input type="text" name="sdk_title_one" id="sdk_title_one" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">SDK Image One :</label>
+                        <input type="file" name="sdk_image_one" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_sdk_image_one" id="pre_sdk_image_one">
+                        <img crossorigin="anonymous" id="sdk_image_one_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                      <label for="title" class="form-label">SDK Title two :</label>
+                      <input type="text" name="sdk_title_two" id="sdk_title_two" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">SDK Image two :</label>
+                        <input type="file" name="sdk_image_two" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_sdk_image_two" id="pre_sdk_image_two">
+                        <img crossorigin="anonymous" id="sdk_image_two_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+                    <div class="mb-3 col-md-5">
+                      <label for="title" class="form-label">SDK Title three :</label>
+                      <input type="text" name="sdk_title_three" id="sdk_title_three" class="form-control">
+                    </div>
+                    <div class="mb-3 col-md-5">
+                        <label for="content" class="form-label">SDK Image three :</label>
+                        <input type="file" name="sdk_image_three" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" >
+                        <input type="hidden" name="pre_sdk_image_three" id="pre_sdk_image_three">
+                        <img crossorigin="anonymous" id="sdk_image_three_update" src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                    </div>
+                </div>
+                <div class="mt-2">
+                  <button type="submit" class="btn btn-primary me-2">Update</button>
+                </div>
+              </form>
+            </div>
+          
+          </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+ <!-- Start section our project items  -->
+
+
+    </div>
+    <!-- / Content -->
+		<%- include('../../common/footer') %>
+    <div class="content-backdrop fade"></div>
+  </div>
+</div>
+<script src="./assets/js/jquery.js"></script>
+<script>
+  var content = CKEDITOR.replace('content');
+  CKEDITOR.replace('content1');
+</script>
+<script>
+  $('#ouritemForm').hide();
+  $('#ouritemviewForm').show();
+  $("#ouritem").show();
+  $('#edititemform').hide();
+  $("#itemeditform").hide();
+  $('#ouritem').click(function(){
+    $('#ouritemForm').show();
+    $('#ouritemviewForm').hide();
+    $('#ouritem').hide();
+    $('#itemeditform').show();
+    $('#edititemform').hide();
+  });
+
+  $('#itemeditform').click(function(){
+    $('#ouritemForm').hide();
+    $('#ouritemviewForm').show();
+    $('#ouritem').show();
+    $('#itemeditform').hide();
+    $('#edititemform').hide();
+  });
+
+  function industriesPost_edit(editid){
+  // alert(editid);
+    $.ajax({
+    url:"/getIndustriesPost/"+editid,
+    method:"GET",
+    success: function(response){
+      // alert(response);
+        $('#editid').val(editid);
+        $('#meta_title').val(response.meta_title);
+        $('#meta_desc').val(response.meta_desc);
+        $('#meta_keywords').val(response.meta_keywords);
+        $('#title').val(response.title);
+        $('#banner_title').val(response.banner_title);
+        $('#banner_desc').val(response.banner_desc);
+        $('#view_project_url').val(response.view_project_url);
+        $('#content').html(response.content);
+        content.setData(response.content);
+        $('#brand_title').val(response.brand_title);
+        $('#brand_heading').val(response.brand_heading);
+        $('#our_technology_title').val(response.our_technology_title);
+        $('#ask_us_title').val(response.ask_us_title);
+        $('#ask_us_heading').val(response.ask_us_heading);
+        $('#project_video_update').val(response.project_video_name);
+
+        $('#dimension_title_one').val(response.dimension_title_one);
+        $('#dimension_title_two').val(response.dimension_title_two);
+        $('#dimension_title_three').val(response.dimension_title_three);
+        $('#dimension_title_four').val(response.dimension_title_four);
+        $('#dimension_title_five').val(response.dimension_title_five);
+        $('#dimension_title_six').val(response.dimension_title_six);
+        $('#dimension_title_seven').val(response.dimension_title_seven);
+        $('#dimension_title_eight').val(response.dimension_title_eight);
+        
+        $('#industries_title').val(response.industries_title);
+        $('#industries_title_one').val(response.industries_title_one);
+        $('#industries_title_two').val(response.industries_title_two);
+        $('#industries_title_three').val(response.industries_title_three);
+        $('#industries_title_four').val(response.industries_title_four);
+        $('#industries_title_five').val(response.industries_title_five);
+        $('#industries_title_six').val(response.industries_title_six);
+        $('#industries_title_seven').val(response.industries_title_seven);
+        $('#industries_title_eight').val(response.industries_title_eight);
+
+        $('#toolkit_title_one').val(response.toolkit_title_one);
+        $('#toolkit_title_two').val(response.toolkit_title_two);
+        $('#toolkit_title_three').val(response.toolkit_title_three);
+
+        $('#language_title_one').val(response.language_title_one);
+        $('#language_title_two').val(response.language_title_two);
+        $('#language_title_three').val(response.language_title_three);
+
+        $('#ask_us_bg_text').val(response.ask_us_bg_text);
+
+        $('#sdk_title_one').val(response.sdk_title_one);
+        $('#sdk_title_two').val(response.sdk_title_two);
+        $('#sdk_title_three').val(response.sdk_title_three);
+
+
+        $('#pre_banner_main_image').val(response.banner_main_image_name);
+        if(response.banner_main_image_name != ''){
+          $('#banner_main_image_update').attr('src', '<%= frontend_url %>'+response.banner_main_image_name).width(100).height(100); 
+        }
+        $('#pre_banner_second_image').val(response.banner_second_image_name);
+        if(response.banner_second_image_name != ''){
+          $('#banner_second_image_update').attr('src', '<%= frontend_url %>'+response.banner_second_image_name).width(100).height(100); 
+        }
+        $('#pre_our_technology_image').val(response.our_technology_image_name);
+        if(response.our_technology_image_name != ''){
+          $('#our_technology_image_update').attr('src', '<%= frontend_url %>'+response.our_technology_image_name).width(100).height(100); 
+        }
+
+        $('#pre_brand_image_one').val(response.brand_image_one_name);
+        if(response.brand_image_one_name != ''){
+          $('#brand_image_one_update').attr('src', '<%= frontend_url %>'+response.brand_image_one_name).width(100).height(100); 
+        }
+        $('#pre_brand_image_two').val(response.brand_image_two_name);
+        if(response.brand_image_two_name != ''){
+          $('#brand_image_two_update').attr('src', '<%= frontend_url %>'+response.brand_image_two_name).width(100).height(100); 
+        }
+        $('#pre_brand_image_three').val(response.brand_image_three_name);
+        if(response.brand_image_three_name != ''){
+          $('#brand_image_three_update').attr('src', '<%= frontend_url %>'+response.brand_image_three_name).width(100).height(100); 
+        }
+
+        $('#pre_toolkit_image_one').val(response.toolkit_image_one_name);
+        if(response.toolkit_image_one_name != ''){
+          $('#toolkit_image_one_update').attr('src', '<%= frontend_url %>'+response.toolkit_image_one_name).width(100).height(100); 
+        }
+        $('#pre_toolkit_image_two').val(response.toolkit_image_two_name);
+        if(response.toolkit_image_two_name != ''){
+          $('#toolkit_image_two_update').attr('src', '<%= frontend_url %>'+response.toolkit_image_two_name).width(100).height(100); 
+        }
+        $('#pre_toolkit_image_three').val(response.toolkit_image_three_name);
+        if(response.toolkit_image_three_name != ''){
+          $('#toolkit_image_three_update').attr('src', '<%= frontend_url %>'+response.toolkit_image_three_name).width(100).height(100); 
+        }
+
+        $('#pre_language_image_one').val(response.language_image_one_name);
+        if(response.language_image_one_name != ''){
+          $('#language_image_one_update').attr('src', '<%= frontend_url %>'+response.language_image_one_name).width(100).height(100); 
+        }
+        $('#pre_language_image_two').val(response.language_image_two_name);
+        if(response.language_image_two_name != ''){
+          $('#language_image_two_update').attr('src', '<%= frontend_url %>'+response.language_image_two_name).width(100).height(100); 
+        }
+        $('#pre_language_image_three').val(response.language_image_three_name);
+        if(response.language_image_three_name != ''){
+          $('#language_image_three_update').attr('src', '<%= frontend_url %>'+response.language_image_three_name).width(100).height(100); 
+        }
+
+        $('#pre_sdk_image_one').val(response.sdk_image_one_name);
+        if(response.sdk_image_one_name != ''){
+          $('#sdk_image_one_update').attr('src', '<%= frontend_url %>'+response.sdk_image_one_name).width(100).height(100); 
+        }
+        $('#pre_sdk_image_two').val(response.sdk_image_two_name);
+        if(response.sdk_image_two_name != ''){
+          $('#sdk_image_two_update').attr('src', '<%= frontend_url %>'+response.sdk_image_two_name).width(100).height(100); 
+        }
+        $('#pre_sdk_image_three').val(response.sdk_image_three_name);
+        if(response.sdk_image_three_name != ''){
+          $('#sdk_image_three_update').attr('src', '<%= frontend_url %>'+response.sdk_image_three_name).width(100).height(100); 
+        }
+
+        $('#pre_dimension_image_one').val(response.dimension_image_one_name);
+        if(response.dimension_image_one_name != ''){
+          $('#dimension_image_one_update').attr('src', '<%= frontend_url %>'+response.dimension_image_one_name).width(100).height(100); 
+        }
+        $('#pre_dimension_image_two').val(response.dimension_image_two_name);
+        if(response.dimension_image_two_name != ''){
+          $('#dimension_image_two_update').attr('src', '<%= frontend_url %>'+response.dimension_image_two_name).width(100).height(100); 
+        }
+        $('#pre_dimension_image_three').val(response.dimension_image_three_name);
+        if(response.dimension_image_three_name != ''){
+          $('#dimension_image_three_update').attr('src', '<%= frontend_url %>'+response.dimension_image_three_name).width(100).height(100); 
+        }
+        $('#pre_dimension_image_four').val(response.dimension_image_four_name);
+        if(response.dimension_image_four_name != ''){
+          $('#dimension_image_four_update').attr('src', '<%= frontend_url %>'+response.dimension_image_four_name).width(100).height(100); 
+        }
+        $('#pre_dimension_image_five').val(response.dimension_image_five_name);
+        if(response.dimension_image_five_name != ''){
+          $('#dimension_image_five_update').attr('src', '<%= frontend_url %>'+response.dimension_image_five_name).width(100).height(100); 
+        }
+        $('#pre_dimension_image_six').val(response.dimension_image_six_name);
+        if(response.dimension_image_six_name != ''){
+          $('#dimension_image_six_update').attr('src', '<%= frontend_url %>'+response.dimension_image_six_name).width(100).height(100); 
+        }
+        $('#pre_dimension_image_seven').val(response.dimension_image_seven_name);
+        if(response.dimension_image_seven_name != ''){
+          $('#dimension_image_seven_update').attr('src', '<%= frontend_url %>'+response.dimension_image_seven_name).width(100).height(100); 
+        }
+        $('#pre_dimension_image_eight').val(response.dimension_image_eight_name);
+        if(response.dimension_image_eight_name != ''){
+          $('#dimension_image_eight_update').attr('src', '<%= frontend_url %>'+response.dimension_image_eight_name).width(100).height(100); 
+        }
+
+        $('#pre_industries_image_one').val(response.industries_image_one_name);
+        if(response.industries_image_one_name != ''){
+          $('#industries_image_one_update').attr('src', '<%= frontend_url %>'+response.industries_image_one_name).width(100).height(100); 
+        }
+        $('#pre_industries_image_two').val(response.industries_image_two_name);
+        if(response.industries_image_two_name != ''){
+          $('#industries_image_two_update').attr('src', '<%= frontend_url %>'+response.industries_image_two_name).width(100).height(100); 
+        }
+        $('#pre_industries_image_three').val(response.industries_image_three_name);
+        if(response.industries_image_three_name != ''){
+          $('#industries_image_three_update').attr('src', '<%= frontend_url %>'+response.industries_image_three_name).width(100).height(100); 
+        }
+        $('#pre_industries_image_four').val(response.industries_image_four_name);
+        if(response.industries_image_four_name != ''){
+          $('#industries_image_four_update').attr('src', '<%= frontend_url %>'+response.industries_image_four_name).width(100).height(100); 
+        }
+        $('#pre_industries_image_five').val(response.industries_image_five_name);
+        if(response.industries_image_five_name != ''){
+          $('#industries_image_five_update').attr('src', '<%= frontend_url %>'+response.industries_image_five_name).width(100).height(100); 
+        }
+        $('#pre_industries_image_six').val(response.industries_image_six_name);
+        if(response.industries_image_six_name != ''){
+          $('#industries_image_six_update').attr('src', '<%= frontend_url %>'+response.industries_image_six_name).width(100).height(100); 
+        }
+        $('#pre_industries_image_seven').val(response.industries_image_seven_name);
+        if(response.industries_image_seven_name != ''){
+          $('#industries_image_seven_update').attr('src', '<%= frontend_url %>'+response.industries_image_seven_name).width(100).height(100); 
+        }
+        $('#pre_industries_image_eight').val(response.industries_image_eight_name);
+        if(response.industries_image_eight_name != ''){
+          $('#industries_image_eight_update').attr('src', '<%= frontend_url %>'+response.industries_image_eight_name).width(100).height(100); 
+        }
+
+        $('#pre_ask_us_image').val(response.ask_us_image_name);
+        if(response.ask_us_image_name != ''){
+          $('#ask_us_image_update').attr('src', '<%= frontend_url %>'+response.ask_us_image_name).width(100).height(100); 
+        }
+
+        
+        $('#ouritemForm').hide();
+        $('#ouritemviewForm').hide();
+        $("#ouritem").hide();
+        $('#edititemform').show();
+        $("#itemeditform").show();
+      
+      }
+    });
+    return false;
+ }
+
+ function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    //  alert("ftype");
+    reader.onload = function (e) {
+      $('#insertimage').attr('src', e.target.result).width(100).height(100);
+      $('#clientimageupdate').attr('src', e.target.result).width(100).height(100);
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+  </script>

@@ -1,0 +1,164 @@
+<style>
+td,th {
+    padding: 10px;
+}
+</style>
+<%- include('../../common/header') %>
+<% if(msg) { %> <%= msg %><% } %>
+<section class="center-wr" style="margin-top:77px;">
+<div class="row page-wraper">
+  <div class="col-md-12 full-content-wraper">
+    <div class="title-header"><h1 class="cmn-heading"><%= title.replace(/\w/, c => c.toUpperCase()) %></h1></div>
+    <% if(msg) { %> <div  class="alert alert-success" id="alertmsg" ><span class="cmn-message"><%= msg %></span></div><% } %>
+        <span><button class="cmn-btn btn-show-hide"><a href="javascript:void(0);" id="processbtn" style="float:right">Add Process</a></button></sapn>
+   <span><button class="cmn-btn btn-show-hide"><a href="javascript:void(0);" id="processplanbtn" style="float:right;">Add Plan</a></button></span>
+    <div class="col-md-2  sidebar-menu">
+    <%- include('../../common/sidebar_common') %>
+    </div>
+     <div class="col-md-6 content-wraper"> 
+    <h1><% if(pagedata) { %><%= pagedata.title %><% } %></h1>
+    <br>
+    <h3><% if(pagedata) { %><%= pagedata.name %><% } %></h3>
+    <br>
+    <% if(pagedata) { %><%= pagedata.description %><% } %>
+
+<hr>
+<h1>Process Plans</h1>
+<br>
+<table border="2" cellspacing="5" cellpadding="5" style="width: 100%;">
+<tr>
+<th>Name</th>
+<th>Edit</th>
+<th>Remove</th>
+</tr>
+<% for(var item of expertiseitem) { %>
+   <tr><td> 
+      <%= item.name %>
+      </td>
+       <td> 
+      <a href="javascript:void(0)"  onclick="geteditform('<%= item._id %>')">Edit</a>
+      </td> 
+      <td> 
+      <a href="/processplanremove/<%= item._id %>" onclick="return confirm('Are you sure you want to delete this item')">X</a>
+      </td>
+      </tr>
+<% } %>
+</table>
+</div>
+<div class="col-md-3 form-wraper" style="display: none;" id="form-wrapper-form">
+
+  <div id="processmainform" style="display: none;">
+    <h3><%= title %></h3>
+    <form method="POST" action="/process" class="common-form">
+      <label>Title:<input type="text" name="title" ></label>
+      <br>
+      <label>Name:<input type="text" name="name" ></label>
+      <br>
+      <label>Description:<br><textarea name="description"></textarea></label>
+      <br>
+      <br>
+      <input type="submit" value="Submit">
+  </form>
+  </div>
+
+   <div id="processplanform" style="display: none;">
+    <h3><%= title %> Plan</h3>
+    <form method="POST" action="/processplan" enctype="multipart/form-data">
+      <label>Name:<input type="text" name="name" ></label>
+      <br>
+      <input type="hidden" name="oldimage" >
+      <input type="file" name="userPhoto" id="userPhoto"  onchange="readURL('create',this);" placeholder=""  style="border:none;width:100%;" accept="image/*">
+      <img crossorigin="anonymous" id="create-show-image" src="/images/user.png" alt="your image" width="100px" height="100px"/>
+      <br>
+      <br>
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+
+
+  <div id="edititemform" style="display: none;">
+    <h3><%= title %> Update</h3>
+    <form method="POST" action="/processplanedit" enctype="multipart/form-data">
+       <input type="hidden" name="editid" id="editid"/>
+      <label>Name:<input type="text" name="name" id="name"  ></label>
+      <br>
+      <input type="hidden" name="oldimage" id="oldfile">
+      <input type="file" name="userPhoto"  onchange="readURL('update',this);" id="userPhotoupdate" style="border:none;width:100%;" accept="image/*">
+      <img crossorigin="anonymous" id="show-image" src="#" alt="your image" width="100px" height="100px"/>
+      <br>
+      <br>
+      <input type="submit" value="Update">
+  </form>
+  </div>
+
+</div>
+  </div>
+</div> 
+</section>
+
+<script>
+  
+$('#processbtn').click(function(){
+    
+  $('#form-wrapper-form').show();
+  $('#processmainform').toggle();
+  $('#processplanform').hide();
+  $('#edititemform').hide();
+  $('#userPhoto').val("");
+  $('#userPhotoupdate').val("");
+  
+})
+
+$('#processplanbtn').click(function(){
+
+  $('#form-wrapper-form').show();
+  $('#processmainform').hide();
+  $('#processplanform').toggle();
+  $('#edititemform').hide();
+  // $('#userPhoto').val("");
+  $('#userPhotoupdate').val("");
+
+})
+
+
+function geteditform(editid){
+ 
+$.ajax({
+url:"/getprocessplan/"+editid,
+method:"GET",
+success: function(response){
+
+   $('#userPhoto').val("");
+   $('#userPhotoupdate').val("");
+   $('#editid').val(editid);
+   $('#name').val(response.name);
+   $('#oldfile').val(response.image);
+   if(response.image != ''){
+    $('#show-image').attr('src', response.image).width(100).height(100); 
+   }else{
+    $('#show-image').attr('src', '/images/user.png').width(100).height(100); 
+   }
+   $('#processmainform').hide();
+   $('#form-wrapper-form').show();
+   $('#edititemform').show();
+   $('#processplanform').hide();
+   
+  }
+});
+return false;
+}
+
+function readURL(ftype,input) {
+if (input.files && input.files[0]) {
+var reader = new FileReader();
+//  alert(ftype);
+reader.onload = function (e) {
+  $('#show-image').attr('src', e.target.result).width(100).height(100);
+  $('#create-show-image').attr('src', e.target.result).width(100).height(100);
+};
+
+reader.readAsDataURL(input.files[0]);
+}
+}
+
+</script>

@@ -1,0 +1,80 @@
+
+<%- include('../../common/sidebar_common') %>
+<div class="layout-page">
+    <%- include('../../common/header_new') %>
+  <div class="content-wrapper">
+    
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <h4 class="fw-bold py-3 mb-4">
+        <% if(msg) { %> <div  class="alert alert-success" id="alertmsg" ><span class="cmn-message"><%= msg %></span></div><% } %>
+      </h4>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card mb-4" >
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card mb-4">
+                    <div id="ouritemviewForm">
+                    <div class="card-body">
+                      <h3>All Events</h3>
+                      <table class="table table table-bordered">
+                        <thead>
+                          <tr>
+                            <th scope="col">Event Name</th>
+                            <th scope="col">Event Date</th>
+                            <!-- Add more columns as needed based on your event data -->
+                          </tr>
+                        </thead>
+                    <!-- Modify the table body to include an "Edit" button -->
+                        <tbody>
+                          <% eventData.forEach(event => { %>
+                            <tr>
+                              <td><%= event.eventName %></td>
+                              <td style="display: flex;justify-content: space-between;"><%= event.eventsData.eventDate %>    
+                                <span>
+                                  <button class="btn btn-primary" onclick="editEvent('<%= event.eventName %>')">Edit</button>
+                                  <button class="btn btn-primary" onclick="deleteEvent('<%= event.eventName %>')">Delete</button></td>  
+                                </span>
+                              <!-- Add more columns as needed based on your event data -->
+                            </tr>
+                          <% }); %>
+                        </tbody>
+
+                      </table>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- Start section our project items  -->
+    </div>
+
+ <!-- Start section our project items  -->
+
+
+    </div>
+    <!-- / Content -->
+		<%- include('../../common/footer') %>
+    <div class="content-backdrop fade"></div>
+  </div>
+</div>
+<script src="./assets/js/jquery.js"></script>
+<script>
+  function editEvent(eventName) {
+    window.location.href = '/editEvent?eventName=' + eventName;
+  }
+  function deleteEvent(eventName) {
+    window.location.href = '/deleteEvent?eventName=' + eventName;
+  }
+</script>
+
+
+
+<!-- events.ejs -->
+
+      

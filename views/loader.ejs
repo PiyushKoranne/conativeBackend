@@ -1,0 +1,338 @@
+<%- include('./common/sidebar_common') %>
+<div class="layout-page">
+  <%- include('./common/header_new') %>
+
+<div class="content-wrapper">
+
+    
+<div class="container-xxl flex-grow-1 container-p-y">
+  <% if(msg) { %> <div  class="alert alert-success" id="alertmsg" ><span class="cmn-message"><%= msg %></span></div><% } %>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4 ">
+                <hr class="my-0">
+                <div class="card-body">
+        <h3>Add New Event Loader</h3>
+        <!-- <form method="POST" action="/addsetting" enctype="multipart/form-data"> -->
+            <div class="mb-3 col-md-10">
+                <form action="/loader/submitForm" method="POST" encType="multipart/form-data" style="display: flex;flex-direction: column; gap: 30px;">
+                 
+                    <div>
+                        <% fieldNames.forEach((fieldName, index) => { %>
+                            <div style="display: block;">
+                              <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                                <%= fieldLabels[index] %>
+                              </label>
+                              <input type="text" class="form-control" style="width: 100%;" name="<%= fieldName %>">
+                            </div>
+                          <% }); %>
+                      <!--  -->
+                          
+                      <div>
+                        <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                          Background Type:
+                        </label>
+                        <input type="radio" name="bgType" value="solid" > <span style="margin: 8px;">Solid Color</span>
+                        <input type="radio" name="bgType" value="gradient"><span style="margin: 8px;"> Linear Gradient</span>
+                        <input type="radio" name="bgType" value="radialgradient"><span style="margin: 8px;"> Radial Gradient</span>
+                      </div>
+                      
+                      <div id="solidColorOption" style="display: none;">
+                        <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                          Background Color:
+                        </label>
+                        <input class="form-control" type="color" name="solidColor" />
+                      </div>
+                      
+                      <div id="gradientOption" style="display: none;">
+                        <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                          Gradient Direction:
+                        </label>
+                        <select class="form-control" name="gradientDirection">
+                          <option value="to top">To Top</option>
+                          <option value="to bottom">To Bottom</option>
+                          <option value="to left">To Left</option>
+                          <option value="to right">To Right</option>
+                          <option value="to bottom left">To Bottom Left</option>
+                          <option value="to bottom right">To Bottom Right</option>
+                          <option value="to top right">To Top Right</option>
+                          <option value="to top left">To Top Left</option>
+
+                        </select>
+                      
+                        <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                          Color 1:
+                        </label>
+                        <input class="form-control" type="color" name="gradientColor1" />
+                      
+                        <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                          Color 1 Percentage: 
+                        </label>
+                        <input class="form-control" type="number" name="gradientColor1percent" />
+
+                        <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                          Color 2:
+                        </label>
+                        <input class="form-control" type="color" name="gradientColor2" />
+                        <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                          Color 2 Percentage:
+                        </label>
+                        <input class="form-control" type="number" name="gradientColor2percent" />
+                      </div>
+
+                      <div id="radialgradientOption" style="display: none;">
+                        <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                          Gradient Size:
+                        </label>
+                        <select class="form-control" name="radialgradientsize">
+                          <option value="farthest-corner">Farthest Corner</option>
+                          <option value="farthest-side">Farthest Side</option>
+                          <option value="closest-corner">Closest Corner</option>
+                          <option value="closest-side">Closest Side</option>
+                        </select>
+
+                        <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                          Start From:
+                        </label>
+                        <input class="form-control" type="number" name="fromPercent" />
+
+                        <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                         End At:
+                        </label>
+                        <input class="form-control" type="number" name="toPercent" />
+                      
+                        <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                          Color 1:
+                        </label>
+                        <input class="form-control" type="color" name="radialgradientColor1" />
+                        <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                          Color 2:
+                        </label>
+                        <input class="form-control" type="color" name="radialgradientColor2" />
+             
+                      </div>
+                      
+                      <!--  -->
+                       <!--  -->
+                          
+                       <div>
+                        <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                          Text Color:
+                        </label>
+                        <input type="radio" name="textType" value="textsolid" ><span style="margin: 8px;">  Solid Color</span>
+                        <input type="radio" name="textType" value="textgradient"> <span style="margin: 8px;"> Linear Gradient</span>
+                      </div>
+                      
+                      <div id="textsolidColorOption" style="display: none;">
+                        <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                          Background Color:
+                        </label>
+                        <input class="form-control" type="color" name="textsolidColor" />
+                      </div>
+                      
+                      <div id="textgradientOption" style="display: none;">
+                        <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                          Gradient Direction:
+                        </label>
+                        <select class="form-control" name="textgradientDirection">
+                          <option value="to top">To Top</option>
+                          <option value="to bottom">To Bottom</option>
+                          <option value="to left">To Left</option>
+                          <option value="to right">To Right</option>
+                          <option value="to bottom left">To Bottom Left</option>
+                          <option value="to bottom right">To Bottom Right</option>
+                          <option value="to top right">To Top Right</option>
+                          <option value="to top left">To Top Left</option>
+
+                        </select>
+                      
+                        <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                          Color 1:
+                        </label>
+                        <input class="form-control" type="color" name="textgradientColor1" />
+                          
+                        <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                          Color 1 Percentage:
+                        </label>
+                        <input class="form-control" type="number" name="textgradientColor1percent" />
+                      
+                        <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                          Color 2:
+                        </label>
+                        <input class="form-control" type="color" name="textgradientColor2" />
+                        <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                          Color 2 Percentage:
+                        </label>
+                        <input class="form-control" type="number" name="textgradientColor2percent" />
+                      </div>
+
+                 
+                      
+                      <!--  -->
+                            <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                              Event Date
+                            </label>
+                            <input class="form-control" type="date" name="eventDate" />
+                            <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                              Event End Date
+                            </label>
+                            <input class="form-control" type="date" name="eventEndDate" />
+                          </div>
+                          <div>
+                            <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                              Conative Logo
+                            </label>
+                            <input class="form-control" type="file" name="conativeLogo" />
+                            <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                              Conative Logo Alt
+                          </label>
+                          <input class="form-control" type="text" name="conativeLogoAlt" >
+                          </div>
+
+                          <div>
+                            <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                              Left Hanging Image
+                            </label>
+                            <input class="form-control" type="file" name="leftHangingImage" />
+                            <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                              Left Hanging Image Alt
+                          </label>
+                          <input class="form-control" type="text" name="leftHangingImageAlt" >
+                         
+                          </div>
+
+                          <div>
+                            <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                              Right Hanging Image
+                            </label>
+                            <input class="form-control" type="file" name="rightHangingImage" />
+                            <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                              Right Hanging Image Alt
+                          </label>
+                          <input class="form-control" type="text" name="rightHangingImageAlt" >
+                         
+                          </div>
+
+                          <div>
+                            <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                              Bottom Left Image
+                            </label>
+                            <input class="form-control" type="file" name="bottomLeftImage" />
+                            <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                              Bottom Left  Image Alt
+                          </label>
+                          <input class="form-control" type="text" name="bottomLeftImageAlt" >
+                         
+                          </div>
+
+                          <div>
+                            <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                              Bottom Right Image
+                            </label>
+                            <input class="form-control" type="file" name="bottomRightImage" />
+                            <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                              Bottom Right Image Alt
+                          </label>
+                          <input class="form-control" type="text" name="bottomRightImageAlt" >
+                         
+                          </div>
+                          
+                          <div>
+                            <label class="form-label" style="display: block; margin: 10px 0; font-weight: 800;">
+                              Home Page Event Image
+                            </label>
+                            <input class="form-control" type="file" name="homePageEventImage" />
+                          </div>
+                    </div>
+                
+                    <div class="mt-2">
+                      <button class="btn btn-primary me-2" type="submit">Add Event</button>
+                    </div>
+                  </form>
+                </div>
+                </div>  </div>
+            </div>
+        </div>
+
+
+
+
+
+</div>
+
+    <!-- / Content -->
+		<%- include('./common/footer') %>
+    <div class="content-backdrop fade"></div>
+  </div>
+</div>
+<script src="./assets/js/jquery.js"></script>
+
+
+
+
+<!-- events.ejs -->
+</div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const bgTypeRadio = document.querySelectorAll('input[name="bgType"]');
+    const textTypeRadio= document.querySelectorAll('input[name="textType"]');
+    const solidColorOption = document.getElementById('solidColorOption');
+    const textsolidColorOption = document.getElementById('textsolidColorOption');
+    const gradientOption = document.getElementById('gradientOption');
+    const textgradientOption = document.getElementById('textgradientOption');
+    const radialgradientOption = document.getElementById('radialgradientOption');
+
+
+    function updateTextOptionsDisplay(){
+
+    textTypeRadio.forEach(item=>{
+      if (!item.checked) return;
+      if (item.value === 'textsolid') {
+        textsolidColorOption.style.display = 'block';
+        textgradientOption.style.display = 'none';
+      } else if(item.value === 'textgradient'){
+        textgradientOption.style.display = 'block';
+        textsolidColorOption.style.display = 'none';
+      }
+    })
+
+    }
+
+
+    function updateOptionsDisplay() {
+   
+      
+    bgTypeRadio.forEach(item=>{
+      if (!item.checked) return;
+      if (item.value === 'solid') {
+        solidColorOption.style.display = 'block';
+        gradientOption.style.display = 'none';
+        radialgradientOption.style.display = 'none';
+      } else if(item.value === 'gradient'){
+        gradientOption.style.display = 'block';
+        solidColorOption.style.display = 'none';
+        radialgradientOption.style.display = 'none';
+      }else{
+        radialgradientOption.style.display = 'block';
+        gradientOption.style.display = 'none';
+        solidColorOption.style.display = 'none';
+      }
+    }
+    )  
+  }
+
+    bgTypeRadio.forEach(item=>{
+      item.addEventListener('change', updateOptionsDisplay);
+    })
+    textTypeRadio.forEach(item=>{
+      item.addEventListener('change', updateTextOptionsDisplay);
+    })
+
+    updateOptionsDisplay();
+  });
+</script>
+
+
+

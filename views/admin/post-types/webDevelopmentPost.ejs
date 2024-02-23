@@ -1,0 +1,352 @@
+
+<%- include('../../common/sidebar_common') %>
+<div class="layout-page">
+    <%- include('../../common/header_new') %>
+  <div class="content-wrapper">
+    
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <h4 class="fw-bold py-3 mb-4">
+        <% if(msg) { %> 
+          <% if(msg.error) { %> 
+          <div  class="alert alert-error"><span class="cmn-message"><%= msg.error %></span></div>
+          <% } else if(msg.success){ %>
+            <div  class="alert alert-success"><span class="cmn-message"><%= msg.success %></span></div>
+          <% } %>
+        <% } %>
+      </h4>
+
+      <div class="row">
+        <h5 class="card-header">Website Design Edit</h5>
+        <div class="col-md-12">
+          <div class="card mb-4" >
+            <div id="abouteditForm">
+              <hr class="my-0">
+              <div class="card-body">
+                <form method="POST" action="/website-design-content">
+                  <input type="hidden" name="id" value="<% if (pagedata) { %><%= pagedata._id %> <% } %>">
+                  <div class="row">
+                    <div class="mb-3 col-md-10">
+                      <label for="meta_title" class="form-label">Meta Title :</label>
+                      <input type="text" name="meta_title" class="form-control" <% if (pagedata) { %>value="<%= pagedata.meta_title %>" <% } %> >
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="meta_desc" class="form-label">Meta Description :</label>
+                      <textarea id="meta_desc" name="meta_desc" class="form-control" ><% if (pagedata) { %> <%= pagedata.meta_desc %><% } %></textarea>
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="meta_keywords" class="form-label">Meta Keywords :</label>
+                      <input type="text" name="meta_keywords" class="form-control" <% if (pagedata) { %>value="<%= pagedata.meta_keywords %>" <% } %> >
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="title" class="form-label">Title :</label>
+                      <input type="text" name="title" class="form-control"   <% if (pagedata) { %>value="<%= pagedata.title %>" <% } %> >
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="heading" class="form-label">Heading :</label>
+                      <input type="text" name="heading" class="form-control"  <% if (pagedata) { %>value="<%= pagedata.heading %>" <% } %> >
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="content" class="form-label">Content :</label>
+                      <textarea id="editor-content"  name="content" class="form-control" ><% if (pagedata) { %><%= pagedata.content %><% } %></textarea>
+                    </div>
+                  </div>
+                  <div class="mt-2">
+                    <button type="submit" class="btn btn-primary me-2">Update</button>
+                  </div>
+                </form>
+              </div>
+            
+            </div>
+          </div>
+            <!-- Edit  end  -->
+        </div>
+      </div>
+
+      <!-- Team Block -->
+      <div class="row" style="--bs-gutter-x: 0.625rem;">
+        <div class="col-md-12">
+          <div class="card mb-4" >
+            <ul class="nav nav-pills flex-column-reverse flex-md-row-reverse mb-3" style="float:right">
+              <li class="nav-item"><a class="nav-link form-toggle active" data-tab="#ouritemForm" id="ouritem" href="javascript:void(0);">Add New</a></li>
+              <li class="nav-item"><a class="nav-link form-toggle active" data-tab="#ouritemviewForm" id="itemeditform" href="javascript:void(0);">View</a></li>
+            </ul>
+          <div id="ouritemviewForm">
+            
+            <div class="card-body">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Edit</th>
+                    <th>Remove</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for(var item of webDevelopmentPosts) { %>
+                    <tr>
+                      <td> 
+                        <%= item.title %>
+                       </td>
+                      <td> 
+                        <a href="javascript:void(0)"  onclick="webDevelopmentPost_edit('<%= item._id %>')">Edit</a>
+                      </td>
+                      <td> 
+                        <a href="webDevelopmentPost-remove/<%= item._id %>" onclick="return confirm('Are you sure you want to delete this item')">X</a>
+                      </td>
+                    </tr>
+                  <% } %>             
+                </tbody>
+              </table>
+             
+            </div>
+          </div>
+        
+          <div id="ouritemForm">
+            <h5 class="card-header">Add New</h5>
+            <hr class="my-0">
+            <div class="card-body">
+              <form method="POST" action="/web-development-post" enctype="multipart/form-data">
+                <input type="hidden" class="form-control" name="editid" value=""/>
+                <div class="row">
+                  <div class="mb-3 col-md-10">
+                    <label for="post_meta_title" class="form-label">Meta Title :</label>
+                    <input type="text" name="post_meta_title" class="form-control" >
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="post_meta_desc" class="form-label">Meta Description :</label>
+                    <textarea name="post_meta_desc" class="form-control" ></textarea>
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="post_meta_keywords" class="form-label">Meta Keywords :</label>
+                    <input type="text" name="post_meta_keywords" class="form-control" >
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="title" class="form-label">Title :</label>
+                    <input type="text" name="title" class="form-control">
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="post_content" class="form-label">Content :</label>
+                    <textarea  name="post_content" id="post-content" class="form-control"></textarea>
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="slug" class="form-label">Slug :</label>
+                    <input type="text" name="slug" class="form-control">
+                  </div>
+                  <div id="items">
+                    <div class="mb-3 col-md-10">
+                      <label for="title" class="form-label">Upload Image :</label>
+                      <input type="file" name="design_image[]"  class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*"> 
+                    </div>
+                  </div>
+                  <button id="add" class="btn add-more button-yellow uppercase col-md-5" type="button">+ Add more image</button>
+                  <button class="delete btn button-white uppercase col-md-5">- Remove image</button>
+                  <div class="mb-3 col-md-10">
+                    <label for="title" class="form-label">Select Design Type :</label>
+                    <select class="form-control" name="design_type">
+                      <option value="">Select Design Catergory</option>
+                      <option value="wordpress-design">Wordpress Design</option>
+                      <option value="shopify-design">Shopify Design</option>
+                      <option value="react-design">React Design</option>
+                      <option value="laravel-design">Laravel Design</option>
+                      <option value="codeigniter-design">Codeigniter Design</option>
+                    </select>
+                  </div>
+              
+                </div>
+                <div class="mt-2">
+                  <button type="submit" class="btn btn-primary me-2">Add</button>
+                </div>
+              </form>
+            </div>
+          </div>
+           
+
+          <div id="edititemform">
+            <h5 class="card-header">Edit</h5>
+            <hr class="my-0">
+            <div class="card-body">
+              <form method="POST" action="/web-development-post" enctype="multipart/form-data">
+                <input type="hidden" class="form-control" name="editid" id="editid"/>
+                <input type="hidden" class="form-control" name="design_type" id="design_type" />
+                <div class="row">
+                  <div class="mb-3 col-md-10">
+                    <label for="post_meta_title" class="form-label">Meta Title :</label>
+                    <input type="text" name="post_meta_title" id="post_meta_title" class="form-control" >
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="post_meta_desc" class="form-label">Meta Description :</label>
+                    <textarea id="post_meta_desc" name="post_meta_desc" class="form-control" ></textarea>
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="post_meta_keywords" class="form-label">Meta Keywords :</label>
+                    <input type="text" name="post_meta_keywords" id="post_meta_keywords" class="form-control"  >
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="title" class="form-label">Title :</label>
+                    <input type="text" name="title" id="title" class="form-control">
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="post_content" class="form-label">Content :</label>
+                    <textarea  name="post_content" id="post-content-edit" class="form-control"></textarea>
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="slug" class="form-label">Slug :</label>
+                    <input type="text" name="slug" id="slug" class="form-control">
+                  </div>
+                  <label for="title" class="form-label">Uploaded Images :</label>
+                  <div id="uploaded_items"></div>
+                  <div id="items_new">
+                    <div class="mb-3 col-md-10">
+                      <label for="title" class="form-label">Upload Image :</label>
+                      <input type="file" name="design_image[]"  class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*"> 
+                    </div>
+                  </div>
+                  <button id="add_new" class="btn add-more button-yellow uppercase col-md-5" type="button">+ Add more image</button>
+                  <button class="delete_new btn button-white uppercase col-md-5">- Remove image</button>
+                  <!-- <div class="mb-3 col-md-10">
+                    <label for="title" class="form-label">Select Design Type :</label>
+                  </div> -->
+              
+                </div>
+                <div class="mt-2">
+                  <button type="submit" class="btn btn-primary me-2">Update</button>
+                </div>
+              </form>
+            </div>
+          
+          </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+ <!-- Start section our project items  -->
+
+
+    </div>
+    <!-- / Content -->
+		<%- include('../../common/footer') %>
+    <div class="content-backdrop fade"></div>
+  </div>
+</div>
+<script src="./assets/js/jquery.js"></script>
+<script>
+  CKEDITOR.replace('editor-content');
+  CKEDITOR.replace('post-content');
+  var postContentEdit = CKEDITOR.replace('post-content-edit');
+  // CKEDITOR.replace('soft_ver_content');
+</script>
+<script>
+  $('#ouritemForm').hide();
+  $('#ouritemviewForm').show();
+  $("#ouritem").show();
+  $('#edititemform').hide();
+  $("#itemeditform").hide();
+  $('#ouritem').click(function(){
+    $('#ouritemForm').show();
+    $('#ouritemviewForm').hide();
+    $('#ouritem').hide();
+    $('#itemeditform').show();
+    $('#edititemform').hide();
+  });
+
+  $('#itemeditform').click(function(){
+    $('#ouritemForm').hide();
+    $('#ouritemviewForm').show();
+    $('#ouritem').show();
+    $('#itemeditform').hide();
+    $('#edititemform').hide();
+  });
+
+  $(".delete").hide();
+  $(".delete_new").hide();
+  //when the Add Field button is clicked
+  $("#add").click(function(e) {
+    $(".delete").fadeIn("1500");
+    //Append a new row of code to the "#items" div
+    $("#items").append(
+      '<div class="next-referral mb-3 col-md-10"><label for="title" class="form-label">Upload Image :</label><input type="file" name="design_image[]"  class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*"></div>'
+    );
+  });
+  $("#add_new").click(function(e) {
+    $(".delete_new").fadeIn("1500");
+    //Append a new row of code to the "#items" div
+    $("#items_new").append(
+      '<div class="next-referral mb-3 col-md-10"><label for="title" class="form-label">Upload Image :</label><input type="file" name="design_image[]"  class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*"></div>'
+    );
+  });
+  $("body").on("click", ".delete", function(e) {
+    $(".next-referral").last().remove();
+    var divCount = jQuery(".next-referral").length;
+    if(divCount == "0"){
+      $(".delete").hide();
+    }
+    return false;
+  });
+  $("body").on("click", ".delete_new", function(e) {
+    $(".next-referral").last().remove();
+    var divCount = jQuery(".next-referral").length;
+    if(divCount == "0"){
+      $(".delete_new").hide();
+    }
+    return false;
+  });
+
+  $("body").on("click", ".remove", function(e) {
+    $(this).parent(".uploaded_item").remove();
+    return false;
+  });
+
+  function webDevelopmentPost_edit(editid){
+  // alert(editid);
+    $.ajax({
+    url:"/getWebDevelopmentPost/"+editid,
+    method:"GET",
+    success: function(response){
+
+        var images = response.images;
+      
+        $('#editid').val(editid);
+        $('#post_meta_title').val(response.meta_title);
+        $('#post_meta_desc').val(response.meta_desc);
+        $('#post_meta_keywords').val(response.meta_keywords);
+        $('#title').val(response.title);
+        $('#post-content-edit').html(response.post_content);
+        postContentEdit.setData(response.post_content);
+        $('#slug').val(response.slug);
+        $("#design_type").val(response.design_type);
+        // $("#design_type").attr('disabled', 'disabled');
+        $(".uploaded_item").remove();
+        $.each(images, function( index, value ) {
+          $("#uploaded_items").append(
+            '<div class="mb-3 col-md-8 uploaded_item"><input type="hidden" name="uploaded_images[]" value="'+value+'" class="form-control"><img crossorigin="anonymous" src="<%= frontend_url %>'+value+'" alt="your image" width="100px" height="100px" style="width: 100px; height: 100px;" /><label class="form-label mx-4">'+value+'</label><button class="remove btn button-white uppercase col-md-5" image-name="'+value+'">Remove</button></div>'
+            );
+        });
+        $('#ouritemForm').hide();
+        $('#ouritemviewForm').hide();
+        $("#ouritem").hide();
+        $('#edititemform').show();
+        $("#itemeditform").show();
+      
+      }
+    });
+    return false;
+ }
+
+ function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    //  alert("ftype");
+    reader.onload = function (e) {
+      $('#insertimage').attr('src', e.target.result).width(100).height(100);
+      $('#clientimageupdate').attr('src', e.target.result).width(100).height(100);
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+  </script>

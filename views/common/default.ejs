@@ -1,0 +1,83 @@
+
+<%- include('sidebar_common') %>
+<div class="layout-page">
+    <%- include('header_new') %>
+  <div class="content-wrapper">
+    
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <h4 class="fw-bold py-3 mb-4">
+        <% if(msg) { %> <div  class="alert alert-success" id="alertmsg" ><span class="cmn-message"><%= msg %></span></div><% } %>
+      </h4>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card mb-4" >
+            <div id="abouteditForm">
+              <hr class="my-0">
+              <div class="card-body">
+                <form method="POST" action="/aboutus" enctype="multipart/form-data">
+                  <input type="hidden" name="id" value="<% if (pagedata) { %><%= pagedata._id %> <% } %>">
+                  <div class="row">
+                    <div class="mb-3 col-md-10">
+                      <label for="title" class="form-label">Title :</label>
+                      <input type="text" name="title" class="form-control"   <% if (pagedata) { %>value="<%= pagedata.title %>" <% } %> >
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="heading" class="form-label">Heading :</label>
+                      <input type="text" name="heading" class="form-control"  <% if (pagedata) { %>value="<%= pagedata.heading %>" <% } %> >
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="content" class="form-label">Content :</label>
+                      <textarea id="editor-content"  name="content" class="form-control" ><% if (pagedata) { %><%= pagedata.content %><% } %></textarea>
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <input type="hidden" name="oldimage" id="preimage" <% if (pagedata) { %>value="<%= pagedata.image %>" <% } %> >
+                      <input type="file" name="userPhoto" class="form-control" onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                      <img id="clientimageupdate"  alt="your image" width="100px" height="100px" <% if (pagedata) { %> src="/imgupload/<%= pagedata %>" <% } %>  <% if (pagedata == '') { %> src="/images/user.png" <% } %> />
+                    </div>
+                  </div>
+                  <div class="mt-2">
+                    <button type="submit" class="btn btn-primary me-2">Update</button>
+                  </div>
+                </form>
+              </div>
+            
+            </div>
+          </div>
+            <!-- Edit  end  -->
+        </div>
+      </div>
+      <!-- Start section our project items  -->
+
+    </div>
+
+ <!-- Start section our project items  -->
+
+
+    </div>
+    <!-- / Content -->
+		<%- include('footer') %>
+    <div class="content-backdrop fade"></div>
+  </div>
+</div>
+<script src="./assets/js/jquery.js"></script>
+<script>
+  CKEDITOR.replace('editor-content');
+</script>
+<script>
+  $("#editForm").show();
+
+  $("#ouritemForm").hide();
+  $("#edititemform").hide();
+  $("#itemeditform").hide();
+  $("#ouritemviewForm").show();
+  $("#ouritem").show();
+  $("#touritemeditform").hide();
+  $("#tourItemForm").hide();
+  $("#editTourItem").hide();
+
+  $("#chooseitemeditform").hide();
+  $("#chooseItemForm").hide();
+  $("#editChooseItem").hide();
+  
+
+  </script>

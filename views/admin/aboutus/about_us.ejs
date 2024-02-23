@@ -1,0 +1,511 @@
+
+<%- include('../../common/sidebar_common') %>
+<div class="layout-page">
+    <%- include('../../common/header_new') %>
+  <div class="content-wrapper">
+    
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <h4 class="fw-bold py-3 mb-4">
+        <% if(msg) { %> <div  class="alert alert-success" id="alertmsg" ><span class="cmn-message"><%= msg %></span></div><% } %>
+      </h4>
+      <div class="row">
+        <h5 class="card-header">AboutUs Edit</h5>
+        <div class="col-md-12">
+          <div class="card mb-4" >
+            <div id="abouteditForm">
+              <hr class="my-0">
+              <div class="card-body">
+                <form method="POST" action="/aboutus" enctype="multipart/form-data">
+                  <input type="hidden" name="id" value="<% if (pagedata) { %><%= pagedata._id %> <% } %>">
+                  <div class="row">
+                    <div class="mb-3 col-md-10">
+                      <label for="meta_title" class="form-label">Meta Title :</label>
+                      <input type="text" name="meta_title" class="form-control" <% if (pagedata) { %>value="<%= pagedata.meta_title %>" <% } %> >
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="meta_desc" class="form-label">Meta Description :</label>
+                      <textarea id="meta_desc" name="meta_desc" class="form-control" ><% if (pagedata) { %> <%= pagedata.meta_desc %><% } %></textarea>
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="meta_keywords" class="form-label">Meta Keywords :</label>
+                      <input type="text" name="meta_keywords" class="form-control" <% if (pagedata) { %>value="<%= pagedata.meta_keywords %>" <% } %> >
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="title" class="form-label">Title :</label>
+                      <input type="text" name="title" class="form-control"   <% if (pagedata) { %>value="<%= pagedata.title %>" <% } %> >
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="heading" class="form-label">Heading :</label>
+                      <input type="text" name="heading" class="form-control"  <% if (pagedata) { %>value="<%= pagedata.heading %>" <% } %> >
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="content" class="form-label">Content :</label>
+                      <textarea id="editor-content"  name="content" class="form-control" ><% if (pagedata) { %><%= pagedata.content %><% } %></textarea>
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <input type="hidden" name="oldimage" id="preimage" <% if (pagedata) { %>value="<%= pagedata.image %>" <% } %> >
+                      <input type="file" name="userPhoto" class="form-control" onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                      <img crossorigin="anonymous" id="clientimageupdate"  alt="your image" width="100px" height="100px" <% if (pagedata.image) { %> src="<%= frontend_url + pagedata.image %>" <% } %>  <% if (pagedata.image == '') { %> src="/images/user.png" <% } %> />
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="vision_heading" class="form-label">Vision Heading :</label>
+                      <input type="text" name="vision_heading" class="form-control"  <% if (pagedata) { %>value="<%= pagedata.vision_heading %>" <% } %> >
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="vision_content" class="form-label">Vision Content :</label>
+                      <input type="text" name="vision_content" class="form-control"  <% if (pagedata) { %>value="<%= pagedata.vision_content %>" <% } %> >
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="mission_heading" class="form-label">Mission Heading :</label>
+                      <input type="text" name="mission_heading" class="form-control"  <% if (pagedata) { %>value="<%= pagedata.mission_heading %>" <% } %> >
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="mission_content" class="form-label">Mission Content :</label>
+                      <input type="text" name="mission_content" class="form-control"  <% if (pagedata) { %>value="<%= pagedata.mission_content %>" <% } %> >
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="choose_heading" class="form-label">Choose Heading :</label>
+                      <input type="text" name="choose_heading" class="form-control"  <% if (pagedata) { %>value="<%= pagedata.choose_heading %>" <% } %> >
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="choose_desc" class="form-label">Choose Desc :</label>
+                      <input type="text" name="choose_desc" class="form-control"  <% if (pagedata) { %>value="<%= pagedata.choose_desc %>" <% } %> >
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="tour_title" class="form-label">Tour Title :</label>
+                      <input type="text" name="tour_title" class="form-control"  <% if (pagedata) { %>value="<%= pagedata.tour_title %>" <% } %> >
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="tour_heading" class="form-label">Tour Heading :</label>
+                      <input type="text" name="tour_heading" class="form-control"  <% if (pagedata) { %>value="<%= pagedata.tour_heading %>" <% } %> >
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="technologies_title" class="form-label">Technologies Title :</label>
+                      <input type="text" name="technologies_title" class="form-control"  <% if (pagedata) { %>value="<%= pagedata.technologies_title %>" <% } %> >
+                    </div>
+                    <div class="mb-3 col-md-10">
+                      <label for="technologies_heading" class="form-label">Technologies Heading :</label>
+                      <input type="text" name="technologies_heading" class="form-control"  <% if (pagedata) { %>value="<%= pagedata.technologies_heading %>" <% } %> >
+                    </div>
+                  </div>
+                  <div class="mt-2">
+                    <button type="submit" class="btn btn-primary me-2">Update</button>
+                  </div>
+                </form>
+              </div>
+            
+            </div>
+          </div>
+            <!-- Edit  end  -->
+        </div>
+      </div>
+
+      <div class="row" style="--bs-gutter-x: 0.625rem;">
+        <h5 class="card-header">Technology Content</h5>
+        <div class="col-md-12">
+          <div class="card mb-4" >
+            <ul class="nav nav-pills flex-column-reverse flex-md-row-reverse mb-3" style="float:right">
+              <li class="nav-item"><a class="nav-link form-toggle active" data-tab="#ouritemForm" id="ouritem" href="javascript:void(0);">Add New</a></li>
+              <li class="nav-item"><a class="nav-link form-toggle active" data-tab="#ouritemviewForm" id="itemeditform" href="javascript:void(0);">View</a></li>
+            </ul>
+          <div id="ouritemviewForm">
+            <div class="card-body">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>image</th>
+                    <th>Remove</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for(var item of techslideitem) { %>
+                    <tr>
+                      <td> 
+                       <%= item.image %>
+                      </td>
+                      <td>
+                        <img crossorigin="anonymous"  alt="your image" width="100px" height="100px" <% if (item.image) { %> src="<%= frontend_url + item.image %>" <% } %>  <% if (item.image == '') { %> src="/images/user.png" <% } %> />
+                      </td>
+                      <!-- <td> 
+                        <a href="javascript:void(0)"  onclick="geteditform('<%= item._id %>')">Edit</a>
+                      </td>  -->
+                      <td> 
+                        <a href="techSlideItem-remove/<%= item._id %>" onclick="return confirm('Are you sure you want to delete this item')">X</a>
+                      </td>
+                    </tr>
+                  <% } %>
+                </tbody>
+              </table>
+             
+            </div>
+          </div>
+        
+          <div id="ouritemForm">
+            <h5 class="card-header">Add New</h5>
+            <hr class="my-0">
+            <div class="card-body">
+              <form method="POST" action="/techslide" enctype="multipart/form-data">
+                <div class="row">
+                  <div class="mb-3 col-md-10">
+                    <input type="file" name="userPhoto" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    <img crossorigin="anonymous" id="insertimage"  src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                  </div>
+                </div>
+                <div class="mt-2">
+                  <button type="submit" class="btn btn-primary me-2">Add</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          </div>
+
+        </div>
+      </div>
+      <!-- Start section our project items  -->
+
+      <div class="row" style="--bs-gutter-x: 0.625rem;">
+        <h5 class="card-header">Anniversary Content</h5>
+        <div class="col-md-12">
+          <div class="card mb-4" >
+            <ul class="nav nav-pills flex-column-reverse flex-md-row-reverse mb-3" style="float:right">
+              <li class="nav-item"><a class="nav-link form-toggle active" data-tab="#tourItemForm" id="tourItem" href="javascript:void(0);">Add New</a></li>
+              <li class="nav-item"><a class="nav-link form-toggle active" data-tab="#tourItemviewForm" id="touritemeditform" href="javascript:void(0);">View</a></li>
+            </ul>
+          <div id="tourItemviewForm">
+            <div class="card-body">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Content</th>
+                    <th>Year</th>
+                    <th>Image</th>
+                    <th>Edit</th>
+                    <th>Remove</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for(var item of tourSlideItem) { %>
+                    <tr>
+                      <td> 
+                        <%= item.tour_item_title %>
+                       </td>
+                      <td> 
+                        <%= item.tour_item_content %>
+                       </td>
+                       <td> 
+                        <%= item.tour_item_year %>
+                       </td>
+                      <td> 
+                       <%= item.image %>
+                      </td>
+                      <td> 
+                        <a href="javascript:void(0)"  onclick="tourSlideItem_edit('<%= item._id %>')">Edit</a>
+                      </td>
+                      <td> 
+                        <a href="tourSlideItem-remove/<%= item._id %>" onclick="return confirm('Are you sure you want to delete this item')">X</a>
+                      </td>
+                    </tr>
+                  <% } %>
+                </tbody>
+              </table>
+             
+            </div>
+          </div>
+        
+          <div id="tourItemForm">
+            <h5 class="card-header">Add New</h5>
+            <hr class="my-0">
+            <div class="card-body">
+              <form method="POST" action="/tourSlide" enctype="multipart/form-data">
+                <input type="hidden" class="form-control" name="editid" />
+                <div class="row">
+                  <div class="mb-3 col-md-10">
+                    <label for="tourItemTitle" class="form-label">Title :</label>
+                    <input type="text" name="tour_item_title" class="form-control"   <% if (pagedata) { %>value="<%= pagedata.tour_item_title %>" <% } %> >
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="tourItemContent" class="form-label">Content :</label>
+                    <input type="text" name="tour_item_content" class="form-control"   <% if (pagedata) { %>value="<%= pagedata.tour_item_content %>" <% } %> >
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="tourItemYear" class="form-label">Year :</label>
+                    <input type="text" name="tour_item_year" class="form-control"   <% if (pagedata) { %>value="<%= pagedata.tour_item_year %>" <% } %> >
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <input type="file" name="userPhoto" class="form-control"  onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                    <img crossorigin="anonymous" id="insertimage"  src="/images/user.png" alt="your image" width="100px" height="100px"/> 
+                  </div>
+                </div>
+                <div class="mt-2">
+                  <button type="submit" class="btn btn-primary me-2">Add</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div id="editTourItem">
+            <h5 class="card-header">Edit</h5>
+            <hr class="my-0">
+            <div class="card-body">
+              <form method="POST" action="/tourSlide" enctype="multipart/form-data">
+                <input type="hidden" class="form-control" name="editid" id="editid"/>
+                <div class="mb-3 col-md-10">
+                  <label for="tourItemTitle" class="form-label">Title :</label>
+                  <input type="text" id="tour_item_title" name="tour_item_title" class="form-control"   <% if (pagedata) { %>value="<%= pagedata.tour_item_title %>" <% } %> >
+                </div>
+                <div class="mb-3 col-md-10">
+                  <label for="tourItemContent" class="form-label">Content :</label>
+                  <input type="text" id="tour_item_content" name="tour_item_content" class="form-control"   <% if (pagedata) { %>value="<%= pagedata.tour_item_content %>" <% } %> >
+                </div>
+                <div class="mb-3 col-md-10">
+                  <label for="tourItemYear" class="form-label">Year :</label>
+                  <input type="text" id="tour_item_year" name="tour_item_year" class="form-control"   <% if (pagedata) { %>value="<%= pagedata.tour_item_year %>" <% } %> >
+                </div>
+                  <div class="mb-3 col-md-10">
+                    <input type="hidden" name="oldimage" id="oldimage">
+                    <input type="file" name="userPhoto" class="form-control"  onchange="readURL(this);" style="border:none;width:100%;" accept="image/*" > 
+                    <img crossorigin="anonymous" id="tourImage" src="/images/user.png" alt="your image" width="100px" height="100px"/>
+                  </div>
+                <div class="mt-2">
+                  <button type="submit" class="btn btn-primary me-2">Update</button>
+                </div>
+              </form>
+            </div>
+          
+          </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row" style="--bs-gutter-x: 0.625rem;">
+        <h5 class="card-header">Choose Conative Content</h5>
+        <div class="col-md-12">
+          <div class="card mb-4" >
+            <ul class="nav nav-pills flex-column-reverse flex-md-row-reverse mb-3" style="float:right">
+              <li class="nav-item"><a class="nav-link form-toggle active" data-tab="#chooseItemForm" id="chooseItem" href="javascript:void(0);">Add New</a></li>
+              <li class="nav-item"><a class="nav-link form-toggle active" data-tab="#chooseItemviewForm" id="chooseitemeditform" href="javascript:void(0);">View</a></li>
+            </ul>
+          <div id="chooseItemviewForm">
+            <div class="card-body">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Content</th>
+                    <th>Edit</th>
+                    <th>Remove</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for(var item of chooseContentItem) { %>
+                    <tr>
+                      <td> 
+                       <%= item.choose_title %>
+                      </td>
+                      <td> 
+                       <%= item.choose_content %>
+                      </td>
+                      <td> 
+                        <a href="javascript:void(0)"  onclick="chooseContentItem_edit('<%= item._id %>')">Edit</a>
+                      </td>
+                      <td> 
+                        <a href="chooseContentItem_remove/<%= item._id %>" onclick="return confirm('Are you sure you want to delete this item')">X</a>
+                      </td>
+                    </tr>
+                  <% } %>
+                </tbody>
+              </table>
+             
+            </div>
+          </div>
+        
+          <div id="chooseItemForm">
+            <h5 class="card-header">Add New</h5>
+            <hr class="my-0">
+            <div class="card-body">
+              <form method="POST" action="/chooseSlide">
+                <input type="hidden" class="form-control" name="chooseEditid" />
+                <div class="row">
+                  <div class="mb-3 col-md-10">
+                    <label for="chooseItemTitle" class="form-label">Title :</label>
+                    <input type="text" value="" name="choose_title" class="form-control" />
+                  </div>
+                  <div class="mb-3 col-md-10">
+                    <label for="chooseItemContent" class="form-label">Content :</label>
+                    <input type="text" value="" name="choose_content" class="form-control" />
+                  </div>
+                </div>
+                <div class="mt-2">
+                  <button type="submit" class="btn btn-primary me-2">Add</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div id="editChooseItem">
+            <h5 class="card-header">Edit</h5>
+            <hr class="my-0">
+            <div class="card-body">
+              <form method="POST" action="/chooseSlide">
+                <input type="hidden" class="form-control" name="chooseEditid" id="chooseEditid"/>
+                <div class="mb-3 col-md-10">
+                  <label for="chooseItemTitle" class="form-label">Title :</label>
+                  <input type="text" id="choose_title" name="choose_title" class="form-control" />
+                </div>
+                <div class="mb-3 col-md-10">
+                  <label for="chooseItemContent" class="form-label">Content :</label>
+                  <input type="text" id="choose_content" name="choose_content" class="form-control" />
+                </div>
+                <div class="mt-2">
+                  <button type="submit" class="btn btn-primary me-2">Update</button>
+                </div>
+              </form>
+            </div>
+          
+          </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+ <!-- Start section our project items  -->
+
+
+    </div>
+    <!-- / Content -->
+		<%- include('../../common/footer') %>
+    <div class="content-backdrop fade"></div>
+  </div>
+</div>
+<script src="./assets/js/jquery.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+  CKEDITOR.replace('editor-content');
+</script>
+<script>
+  $("#editForm").show();
+
+  $("#ouritemForm").hide();
+  $("#edititemform").hide();
+  $("#itemeditform").hide();
+  $("#ouritemviewForm").show();
+  $("#ouritem").show();
+  $("#touritemeditform").hide();
+  $("#tourItemForm").hide();
+  $("#editTourItem").hide();
+
+  $("#chooseitemeditform").hide();
+  $("#chooseItemForm").hide();
+  $("#editChooseItem").hide();
+  
+  $("#ouritem").on("click", function () {
+    $("#ouritemForm").show();
+    $("#ouritemviewForm").hide();
+    $("#ouritem").hide();
+    $("#itemeditform").show();
+    $("#edititemform").hide();
+  });
+
+  
+  $('#itemeditform').click(function(){
+    $('#ouritemForm').hide();
+    $('#ouritemviewForm').show();
+    $('#ouritem').show();
+    $('#itemeditform').hide();
+    $('#edititemform').hide();
+  });
+  
+  $("#tourItem").on("click", function () {
+    $("#tourItemForm").show();
+    $("#tourItemviewForm").hide();
+    $("#tourItem").hide();
+    $("#touritemeditform").show();
+  });
+
+  $("#touritemeditform").on("click", function () {
+    $("#tourItemForm").hide();
+    $("#editTourItem").hide();
+    $("#tourItemviewForm").show();
+    $("#tourItem").show();
+    $("#touritemeditform").hide();
+  });
+
+  $("#chooseItem").on("click", function () {
+    $("#chooseItemForm").show();
+    $("#chooseItemviewForm").hide();
+    $("#chooseItem").hide();
+    $("#chooseitemeditform").show();
+  });
+  
+  $("#chooseitemeditform").on("click", function () {
+    $('#editChooseItem').hide();
+    $("#chooseItemForm").hide();
+    $("#chooseItemviewForm").show();
+    $("#chooseItem").show();
+    $("#chooseitemeditform").hide();
+  });
+
+ function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    //  alert("ftype");
+    reader.onload = function (e) {
+      $('#insertimage').attr('src', e.target.result).width(100).height(100);
+      $('#tourImage').attr('src', e.target.result).width(100).height(100);
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+function tourSlideItem_edit(editid){
+    $.ajax({
+    url:"/tourSlideItem_edit/"+editid,
+    method:"GET",
+    success: function(response){
+      // alert(response);
+        $('#editid').val(editid);
+        $('#tour_item_title').val(response.tour_item_title);
+        $('#tour_item_content').val(response.tour_item_content);
+        $('#tour_item_year').val(response.tour_item_year);
+        $('#oldimage').attr('value',response.image);
+        if(response.image != ''){
+        $('#tourImage').attr('src', '<%= frontend_url %>'+response.image).width(100).height(100); 
+        }else{
+        $('#tourImage').attr('src', '/images/user.png').width(100).height(100); 
+        }
+        $('#tourItemviewForm').hide();
+        $('#tourItem').hide();
+        $('#editTourItem').show();
+        $("#touritemeditform").show();
+      
+      }
+    });
+    return false;
+ }
+ 
+
+ function chooseContentItem_edit(editid){
+    $.ajax({
+    url:"/chooseContentItem_edit/"+editid,
+    method:"GET",
+    success: function(response){
+      // alert(response);
+        $('#chooseEditid').val(editid);
+        $('#choose_title').val(response.choose_title);
+        $('#choose_content').val(response.choose_content);
+        $('#chooseItemviewForm').hide();
+        $('#chooseItem').hide();
+        $('#editChooseItem').show();
+        $("#chooseitemeditform").show();
+      }
+    });
+    return false;
+ }
+
+  </script>

@@ -1,0 +1,39 @@
+const session = require("express-session");
+var express = require("express");
+var router = express.Router();
+var multer = require("multer");
+var jwt = require("jsonwebtoken");
+var checkLogin = require("../../middleware/check");
+const async = require("async");
+var { upload, url } = require("../constants");
+
+var MongoClient = require("mongodb").MongoClient;
+var { ObjectId } = require("mongodb");
+
+router.get("/", checkLogin, async function (req, res, next) {
+  
+
+    await MongoClient.connect(url, function (err, db) {
+      if (err) throw err;
+      var dbo = db.db("conative");
+  
+  
+  
+      dbo.collection("users").findOne(function (err, result) {
+        if (err) {
+          return;
+        }
+        if (!result) {
+          res.send("Page Not Found Please Check Collection");
+          console.log(err);
+        } else {
+          return res.render("common/header_new", { title: "gfdgfdg",user:result });
+        }
+      });
+    });
+  
+  
+  });
+
+
+module.exports = router;

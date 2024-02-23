@@ -1,0 +1,124 @@
+<%- include('../../common/sidebar_common') %>
+<div class="layout-page">
+  <%- include('../../common/header_new') %>
+
+  <div class="content-wrapper">
+    
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <h4 class="fw-bold py-3 mb-4">
+        <% if(msg) { %> <div  class="alert alert-success" id="alertmsg" ><span class="cmn-message"><%= msg %></span></div><% } %>
+      </h4>
+     <!-- Start 1 section for items  -->
+     <div class="row">
+      <div class="col-md-12">
+        <div class="card mb-4" >
+          <!-- <ul class="nav nav-pills flex-column-reverse flex-md-row-reverse mb-3" style="float:right">
+            <li class="nav-item"><a class="nav-link form-toggle active" data-tab="#acountForm" id="account" href="javascript:void(0);">Edit</a></li>
+            <li class="nav-item"><a class="nav-link form-toggle active" data-tab="#editForm" id="accounteditform" href="javascript:void(0);">View</a></li>
+          </ul> -->
+        <!-- <div id="acountForm">
+          <h5 class="card-header"><?%= title %>/h5>
+          <hr class="my-0">
+          <div class="card-body">
+            <h3><% if (pagedata) { %><%= pagedata.title %> <% } %></h3>
+            <br>
+            <h3><% if(pagedata) { %><%= pagedata.backname %><% } %></h3>
+            <br>
+            <% if (pagedata) { %><%= pagedata.btnproject %><% } %>
+            <br>
+            <% if (pagedata) { %><%= pagedata.btnteam %><% } %>
+          </div>
+        </div> -->
+       
+        <div id="fold_editForm">
+          <h5 class="card-header">Fold Edit</h5>
+          <hr class="my-0">
+          <div class="card-body">
+            <form method="POST" action="/header" enctype="multipart/form-data">
+              <div class="row">
+                <div class="mb-3 col-md-10">
+                  <label for="meta_title" class="form-label">Meta Title :</label>
+                  <input type="text" name="meta_title" class="form-control" <% if (pagedata) { %>value="<%= pagedata.meta_title %>" <% } %> >
+                </div>
+                <div class="mb-3 col-md-10">
+                  <label for="meta_desc" class="form-label">Meta Description :</label>
+                  <textarea id="meta_desc" name="meta_desc" class="form-control" ><% if (pagedata) { %> <%= pagedata.meta_desc %><% } %></textarea>
+                </div>
+                <div class="mb-3 col-md-10">
+                  <label for="meta_keywords" class="form-label">Meta Keywords :</label>
+                  <input type="text" name="meta_keywords" class="form-control" <% if (pagedata) { %>value="<%= pagedata.meta_keywords %>" <% } %> >
+                </div>
+                <div class="mb-3 col-md-10">
+                  <label for="lastName" class="form-label">Title :</label>
+                  <input type="text" name="title" class="form-control"   <% if (pagedata) { %>value="<%= pagedata.title %>" <% } %> >
+                </div>
+                <div class="mb-3 col-md-10">
+                  <label for="firstName" class="form-label">Name :</label>
+                  <input type="text" name="name" class="form-control"  <% if (pagedata) { %>value="<%= pagedata.name %>" <% } %> >
+                </div>
+                <div class="mb-3 col-md-10">
+                  <label for="email" class="form-label">Back Name :</label>
+                  <input type="text" name="backname" class="form-control"  <% if (pagedata) { %>value="<%= pagedata.backname %>" <% } %> >
+                </div>
+                <div class="mb-3 col-md-10">
+                  <label for="email" class="form-label">Content :</label>
+                  <input type="text" name="content" class="form-control"  <% if (pagedata) { %>value="<%= pagedata.content %>" <% } %> >
+                </div>
+                <div class="mb-3 col-md-10">
+                    <label for="email" class="form-label">Button Project :</label>
+                    <input type="text" name="btnproject" class="form-control"  <% if (pagedata) { %>value="<%= pagedata.btnproject %>" <% } %> > 
+                </div>
+                <div class="mb-3 col-md-10">
+                  <label for="email" class="form-label">Button Project Url:</label>
+                  <input type="text" name="btnprojecturl" class="form-control"  <% if (pagedata) { %>value="<%= pagedata.btnprojecturl %>" <% } %> > 
+              </div>
+              <div class="mb-3 col-md-10">
+                  <label for="email" class="form-label">Button Team :</label>
+                  <input type="text" name="btnteam" class="form-control"  <% if (pagedata) { %>value="<%= pagedata.btnteam %>" <% } %> > 
+              </div>
+              <div class="mb-3 col-md-10">
+                <label for="email" class="form-label">Button Team Url:</label>
+                <input type="text" name="btnteamurl" class="form-control"  <% if (pagedata) { %>value="<%= pagedata.btnteamurl %>" <% } %> > 
+            </div>
+                  <div class="mb-3 col-md-10">
+                  <input type="hidden" name="oldimage" id="preimage" <% if (pagedata) { %>value="<%= pagedata.image %>" <% } %> >
+                  <input type="file" name="userPhoto" class="form-control" onchange="readURL(this);"  style="border:none;width:100%;" accept="image/*" > 
+                  <img crossorigin="anonymous" id="clientimageupdate"  alt="your image" width="100px" height="100px" <% if (pagedata.image) { %> src="/images/user.png" <% } %>  <% if (pagedata.image != '') { %> src="<%= frontend_url + pagedata.image %>" <% } %> />
+                </div>
+                </div>
+              <div class="mt-2">
+                <button type="submit" class="btn btn-primary me-2">Update</button>
+              </div>
+            </form>
+          </div>
+        
+        </div>
+        </div>
+      </div>
+    </div>
+    <!-- end 1 section for items  -->
+    </div>
+
+		<%- include('../../common/footer') %>
+    <div class="content-backdrop fade"></div>
+  </div>
+</div>
+<script src="./assets/js/jquery.js"></script>
+<!-- <script>
+  CKEDITOR.replace('editor-content');
+</script> -->
+<script>
+  function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    //  alert("ftype");
+    reader.onload = function (e) {
+      
+      $('#clientimageupdate').attr('src', e.target.result).width(100).height(100);
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+</script>
